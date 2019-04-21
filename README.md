@@ -1,4 +1,5 @@
 # homebridge-macosx-info
+*Current version is 0.0.2*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 

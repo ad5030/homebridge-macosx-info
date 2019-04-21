@@ -56,26 +56,28 @@ The index.js call "/sh/homebridge-macosx-info.sh" shell script. You can find thi
 
 ```
 function sys_mon()
-    {
-        read -a fields <<< `<path directory>/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
-        _temp=${fields[7]//,/.}
-        _fan=${fields[8]}
+{
+    _TIME=`date`
 
-        read -a fields <<< `uptime`
-        _uptime=${fields[2]//,/}
-        _uptime=${_uptime//:/.}
+    read -a fields <<< `~/r2d2/it/nagios/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+    _temp=${fields[7]//,/.}
+    _fan=${fields[8]}
 
-        read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
-        _mem=${fields[1]}
+    IFS=' ' read -ra STR <<< `uptime`   
+    _UPTIME="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
+    _LOAD="${STR[5]}"
 
-        read -a fields <<<  `df -h / | grep /`
-        _disk=${fields[4]//%/}
+    read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
+    _mem=${fields[1]}
 
-        echo '{"temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":'${_uptime:0:5}',"mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
-        echo ${_temp:5:4} > /tmp/_hb_temperature.txt
-        uptime > /tmp/_hb_uptime.txt
-    }
-sys_mon
+    read -a fields <<<  `df -h / | grep /`
+    _disk=${fields[4]//%/}
+
+    _homebridge-macosx-info.json
+    echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
+    echo ${_temp:5:4} > /tmp/_hb_temperature.txt
+    uptime > /tmp/_hb_uptime.txt
+}
 ```
 
 ## TODO

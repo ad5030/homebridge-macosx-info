@@ -41,6 +41,10 @@ scp -r -p $SRC/package.json $USER_TARGET@$HOST_TARGET:$NODE_MODULE_TARGET/packag
 scp -r -p $SRC/src/js/index.js $USER_TARGET@$HOST_TARGET:$NODE_MODULE_TARGET/index.js
 scp -r -p $SRC/src/sh/homebridge-macosx-info.sh $USER_TARGET@$HOST_TARGET:$NODE_MODULE_TARGET/sh/homebridge-macosx-info.sh
 
+printf "$red" "  |_ homebridge restart"
+/usr/bin/ssh -p $PORT_TARGET $USER_TARGET@$HOST_TARGET "launchctl unload ~/Library/LaunchAgents/com.homebridge.server.plist && rm ~/.homebridge/config.json" && printf "$gre" "    |_ homebride [OFF]"
+/usr/bin/ssh -p $PORT_TARGET $USER_TARGET@$HOST_TARGET "ln -s ~/.homebridge/config.wake.json ~/.homebridge/config.json && launchctl load ~/Library/LaunchAgents/com.homebridge.server.plist" && printf "$gre" "    |_ homebride [ON]"
+
 printf "$red" "-> Sync ownCloud repository ..."
 /usr/bin/ssh -p $PORT_TARGET $USER_TARGET@$HOST_TARGET "/usr/local/Cellar/php@7.2/7.2.15/bin/php /Library/WebServer/Documents/owncloud/occ files:scan AD"
 

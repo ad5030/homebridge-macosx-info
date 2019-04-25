@@ -10,14 +10,27 @@ Such as :
 * Free mem (Mo)
 * Disk avalable (%)
 * Load average (%)
+* UpdateTime
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 
 <div style="width:830; background-color:white; height:400px; overflow:scroll; overflow-x: scroll;overflow-y: hidden;">
-<img style=" float:left; display:inline" src=https://github.com/ad5030/homebridge-macosx-info/blob/master/screenshots/screenshot_1.png width="30%" height="30%"/>
-<img style=" float:left; display:inline" src=https://github.com/ad5030/homebridge-macosx-info/blob/master/screenshots/.fake.png width="5%" height="5%"/>
-<img style=" float:left; display:inline" src=https://github.com/ad5030/homebridge-macosx-info/blob/master/screenshots/screenshot.png width="30%" height="30%"/>
+<img style=" float:left; display:inline" src=http://di-marco.net/screenshots/screenshot_1.png width="30%" height="30%"/>
+<img style=" float:left; display:inline" src=http://di-marco.net/screenshots/.fake.png width="5%" height="5%"/>
+<img style=" float:left; display:inline" src=http://di-marco.net/screenshots/screenshot.png width="30%" height="30%"/>
 </div>
+
+## Exemple of .json data reponse file
+```
+{
+    "UpdateTime":"Sun Apr 21 22:38:07 CEST 2019",
+    "temperature":30.7,
+    "fan":1801,
+    "uptime":"up 16:38, 2 users",
+    "load":"3.15 1.97 1.82",
+    "mem":422.35,"disk":50
+}
+```
 
 ## Prerequisites
 * Install <a href="https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS">Homebridge</a> on macOS
@@ -35,12 +48,12 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
         {
             "accessory": "MacOSXSysInfo",
             "name": "macOSX Info",
-            "file": "/tmp/hb_temperature.txt",
+            "file": "/tmp/_homebridge-macosx-info.json",
             "updateInterval": 60000
         }
     ],
 ```
-The "/tmp/_hb_temperature.txt" is a file where the temperature is temporarily measured. The default value of this is "/tmp/_hb_temperature.txt".
+The "/tmp/_homebridge-macosx-info.json" is a file where the temperature is temporarily measured. The default value of this is "/tmp/_homebridge-macosx-info.json".
 
 "updateInterval" : is time in second of update measured temperature.
 
@@ -49,35 +62,32 @@ The index.js call "/sh/homebridge-macosx-info.sh" shell script. You can find thi
 ### Adapte "homebridge-macosx-info.sh" file in sh/ directory
 
 * Change or adapte path of "check_osx_smc" bin
-* Change or adapte path of temporary files :
-    1. _hb_temperature.txt
-    2. _hb_uptime.txt
-    3. _homebridge-macosx-info.json
-
+* Change or adapte path of temporary files : _homebridge-macosx-info.json
 
 ```
 function sys_mon()
 {
-    _TIME=`date`
+_TIME=`date`
 
-    read -a fields <<< `~/r2d2/it/nagios/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
-    _temp=${fields[7]//,/.}
-    _fan=${fields[8]}
+read -a fields <<< `~/r2d2/it/nagios/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+_temp=${fields[7]//,/.}
+_fan=${fields[8]}
 
-    IFS=' ' read -ra STR <<< `uptime`   
-    _UPTIME="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
-    _LOAD="${STR[5]}"
+IFS=' ' read -ra STR <<< `uptime`   
+_UPTIME="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
 
-    read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
-    _mem=${fields[1]}
+_LOAD=`sysctl -n vm.loadavg` 
+_LOAD="${_LOAD//[\{\}]}"
+_LOAD="${_LOAD/ /}"
+_LOAD="${_LOAD%?}"
 
-    read -a fields <<<  `df -h / | grep /`
-    _disk=${fields[4]//%/}
+read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
+_mem=${fields[1]}
 
-    _homebridge-macosx-info.json
-    echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
-    echo ${_temp:5:4} > /tmp/_hb_temperature.txt
-    uptime > /tmp/_hb_uptime.txt
+read -a fields <<<  `df -h / | grep /`
+_disk=${fields[4]//%/}
+
+echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","load":"'${_LOAD}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
 }
 ```
 

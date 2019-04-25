@@ -60,7 +60,7 @@ function MacOSXSysInfo(log, config) {
     if(config["file"]) {
         this.readFile = config["file"];
     } else {
-        this.readFile = "/tmp/_hb_temperature.txt";
+        this.readFile = "/tmp/homebridge-macosx-info.json";
     }
     if(config["updateInterval"] && config["updateInterval"] > 0) {
         this.updateInterval = config["updateInterval"];
@@ -101,9 +101,12 @@ MacOSXSysInfo.prototype.getDisk = function (callback) {
 };
 
 MacOSXSysInfo.prototype.getAvgLoad = function (callback) {
-	var data = fs.readFileSync("/tmp/_hb_uptime.txt", "utf-8");
-	var load = data.substring(data.length - 15);
-			
+//	var data = fs.readFileSync("/tmp/_hb_uptime.txt", "utf-8");
+//	var load = data.substring(data.length - 15);
+	var json = fs.readFileSync("/tmp/_homebridge-macosx-info.json", "utf-8");
+	var obj = JSON.parse(json);
+	var load = obj.load;
+	
 	callback(null, load);
 };
 
@@ -213,8 +216,12 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		.on('get', this.getDisk.bind(this));
 		function getCurrentTemperature() {
 		var data = fs.readFileSync(that.readFile, "utf-8");
+
+	var obj = JSON.parse(data);
+	var temperatureVal = (obj.temperature);
+
 		//var temperatureVal = parseFloat(data) / 1000;
-		var temperatureVal = parseFloat(data.replace(',', '.'));
+	//	var temperatureVal = parseFloat(data.replace(',', '.'));
 		//var temperatureVal = parseFloat(data);
 		temp = temperatureVal;
 		that.log.debug("update currentTemperatureCharacteristic value: " + temperatureVal);

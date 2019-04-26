@@ -21,6 +21,8 @@ module.exports = function(homebridge) {
 
 function readUptime() {
 	const exec = require('child_process').exec;
+	//var _cmd=this.cmd;  
+	//var script = exec('_cmd',
 	var script = exec('~/r2d2/it/homekit/homebridge-macosx-info/sh/homebridge-macosx-info.sh',
 		(error, stdout, stderr) => {
 			if (error !== null) {
@@ -56,13 +58,15 @@ function MacOSXSysInfo(log, config) {
     }
 
     this.log = log;
-    this.name = config["name"];
+	this.name = config["name"];
+	this.serial = config["serial"];
+	//this.cmd = config["cmd"];
     if(config["file"]) {
         this.readFile = config["file"];
     } else {
         this.readFile = "/tmp/homebridge-macosx-info.json";
-    }
-    if(config["updateInterval"] && config["updateInterval"] > 0) {
+	}
+  if(config["updateInterval"] && config["updateInterval"] > 0) {
         this.updateInterval = config["updateInterval"];
     } else {
         this.updateInterval = null;
@@ -80,21 +84,21 @@ function MacOSXSysInfo(log, config) {
 //};
 
 MacOSXSysInfo.prototype.getUptime = function (callback) {
-	var json = fs.readFileSync("/tmp/_homebridge-macosx-info.json", "utf-8");
+	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
 	var uptime = (obj.uptime);
 	callback(null, uptime);
 };
 
 MacOSXSysInfo.prototype.getFan = function (callback) {
-	var json = fs.readFileSync("/tmp/_homebridge-macosx-info.json", "utf-8");
+	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
 	var fan = parseFloat(obj.fan);
 	callback(null, fan);
 };
 
 MacOSXSysInfo.prototype.getDisk = function (callback) {
-	var json = fs.readFileSync("/tmp/_homebridge-macosx-info.json", "utf-8");
+	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
 	var disk = parseFloat(obj.disk);
 	callback(null, disk);
@@ -103,7 +107,7 @@ MacOSXSysInfo.prototype.getDisk = function (callback) {
 MacOSXSysInfo.prototype.getAvgLoad = function (callback) {
 //	var data = fs.readFileSync("/tmp/_hb_uptime.txt", "utf-8");
 //	var load = data.substring(data.length - 15);
-	var json = fs.readFileSync("/tmp/_homebridge-macosx-info.json", "utf-8");
+	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
 	var load = obj.load;
 	
@@ -121,7 +125,7 @@ MacOSXSysInfo.prototype.getAvgLoad = function (callback) {
 //};
 
 MacOSXSysInfo.prototype.getMem = function (callback) {
-	var json = fs.readFileSync("/tmp/_homebridge-macosx-info.json", "utf-8");
+	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
 	var mem = parseFloat(obj.mem);
 	callback(null, mem);
@@ -137,7 +141,8 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	this.infoService
 		.setCharacteristic(Characteristic.Manufacturer, "di-marco_a.net")
 		.setCharacteristic(Characteristic.Model, this.name)
-		.setCharacteristic(Characteristic.SerialNumber, "042-SN-20190407-" + packageFile.version)
+		.setCharacteristic(Characteristic.SerialNumber, this.serial + "_" + packageFile.version)
+//		.setCharacteristic(Characteristic.SerialNumber, "042-SN-20190407-" + packageFile.version)
 		.setCharacteristic(Characteristic.FirmwareRevision, packageFile.version);
 	
 	this.fakeGatoHistoryService = new FakeGatoHistoryService("weather", this, { storage: 'fs' });
@@ -217,8 +222,8 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		function getCurrentTemperature() {
 		var data = fs.readFileSync(that.readFile, "utf-8");
 
-	var obj = JSON.parse(data);
-	var temperatureVal = (obj.temperature);
+		var obj = JSON.parse(data);
+		var temperatureVal = (obj.temperature);
 
 		//var temperatureVal = parseFloat(data) / 1000;
 	//	var temperatureVal = parseFloat(data.replace(',', '.'));

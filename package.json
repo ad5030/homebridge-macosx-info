@@ -1,7 +1,9 @@
 {
   "name": "homebridge-macosx-info",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A homebridge plugin that get macOSX information",
+  "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
+  "author": "di-marco_a@pm.me",
   "keywords": [
     "homebridge-plugin",
     "homebridge",
@@ -13,9 +15,7 @@
     "iPhone",
     "iPad"
   ],
-  "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
-  "author": "di-marco_a@pm.me",
-  "license": "MIT",
+ "license": "MIT",
   "repository": {
     "type": "git",
     "url": "ssh://git@r2d2.ddns.net:22/Users/git/ownGit/homebridge-macosx-info.git"

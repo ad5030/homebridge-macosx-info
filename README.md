@@ -17,7 +17,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 <div style="width:830; background-color:white; height:400px; overflow:scroll; overflow-x: scroll;overflow-y: hidden;">
 <img style=" float:left; display:inline" src=http://di-marco.net/screenshots/screenshot_1.png width="30%" height="30%"/>
 <img style=" float:left; display:inline" src=http://di-marco.net/screenshots/.fake.png width="5%" height="5%"/>
-<img style=" float:left; display:inline" src=http://di-marco.net/screenshots/screenshot.png width="30%" height="30%"/>
+<img style=" float:left; display:inline" src=http://di-marco.net/screenshots/screenshot_2.png width="30%" height="30%"/>
 </div>
 
 ## Exemple of .json data reponse file

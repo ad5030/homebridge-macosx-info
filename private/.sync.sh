@@ -27,6 +27,8 @@ printf "$l_blu" "Path target [$PATH_TARGET]"
 printf "$l_blu" "Config homebridge target [$CONFIG_HOMEBRIDGE_TARGET]"
 printf "$l_blu" "Port target [$PORT_TARGET]"
 
+chmod +x $SRC/src/sh/*.sh
+
 printf "$red" "-> save in $PATH_TARGET ..."
 scp -r -p $SRC/LICENSE $USER_TARGET@$HOST_TARGET:$PATH_TARGET/LICENSE
 scp -r -p $SRC/package.json $USER_TARGET@$HOST_TARGET:$PATH_TARGET/package.json

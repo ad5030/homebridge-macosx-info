@@ -69,7 +69,7 @@ function sys_mon()
 {
 _TIME=`date`
 
-read -a fields <<< `~/r2d2/it/nagios/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
 _fan=${fields[8]}
 

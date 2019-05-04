@@ -20,7 +20,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 <img style=" float:left; display:inline" src=https://github.com/ad5030/homebridge-macosx-info/blob/master/screenshots/screenshot_2.png width="30%" height="30%"/>
 </div>
 
-## Exemple of .json data reponse file
+## Exemple of .json data response file
 ```
 {
     "UpdateTime":"Sun Apr 21 22:38:07 CEST 2019",

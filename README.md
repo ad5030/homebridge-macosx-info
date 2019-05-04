@@ -28,7 +28,8 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
     "fan":1801,
     "uptime":"up 16:38, 2 users",
     "load":"3.15 1.97 1.82",
-    "mem":422.35,"disk":50
+    "mem":422.35,
+    "disk":50
 }
 ```
 

@@ -68,27 +68,27 @@ The index.js call "/sh/homebridge-macosx-info.sh" shell script. You can find thi
 ```
 function sys_mon()
 {
-_TIME=`date`
+    _TIME=`date`
 
-read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
-_temp=${fields[7]//,/.}
-_fan=${fields[8]}
+    read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+    _temp=${fields[7]//,/.}
+    _fan=${fields[8]}
 
-IFS=' ' read -ra STR <<< `uptime`   
-_UPTIME="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
+    IFS=' ' read -ra STR <<< `uptime`   
+    _UPTIME="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
 
-_LOAD=`sysctl -n vm.loadavg` 
-_LOAD="${_LOAD//[\{\}]}"
-_LOAD="${_LOAD/ /}"
-_LOAD="${_LOAD%?}"
+    _LOAD=`sysctl -n vm.loadavg` 
+    _LOAD="${_LOAD//[\{\}]}"
+    _LOAD="${_LOAD/ /}"
+    _LOAD="${_LOAD%?}"
 
-read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
-_mem=${fields[1]}
+    read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
+    _mem=${fields[1]}
 
-read -a fields <<<  `df -h / | grep /`
-_disk=${fields[4]//%/}
+    read -a fields <<<  `df -h / | grep /`
+    _disk=${fields[4]//%/}
 
-echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","load":"'${_LOAD}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
+    echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","load":"'${_LOAD}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
 }
 ```
 

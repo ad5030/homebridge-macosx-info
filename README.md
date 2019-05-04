@@ -61,7 +61,7 @@ The index.js call "/sh/homebridge-macosx-info.sh" shell script. You can find thi
 
 ### Adapte "homebridge-macosx-info.sh" file in sh/ directory
 
-* Change or adapte path of "check_osx_smc" bin
+* Change or adapte path of "<a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a>" bin
 * Change or adapte path of temporary files : _homebridge-macosx-info.json
 
 ```
@@ -104,6 +104,7 @@ echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}
 ## Credits
 
 * <a href="https://github.com/simont77/fakegato-history">simont77 - fakegato-history</a>
+* <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc/</a>
 
 
 ## Disclaimer

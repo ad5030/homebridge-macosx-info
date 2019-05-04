@@ -1,5 +1,5 @@
 # homebridge-macosx-info
-*Current version is v0.0.3*
+*Current version is v0.0.4*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
@@ -94,7 +94,7 @@ echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}
 ## TODO
 
 - [ ] Worked on performance 
-- [ ] Generate all the measures in a .json file.
+- [x] Generate all the measures in a .json file.
 
 ## Known bugs
 

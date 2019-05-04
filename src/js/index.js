@@ -1,3 +1,14 @@
+//-------------------------------------------------------------------
+//~ @(#) Name : index.js
+//~ @(#) Desc : 
+//~ @(#) version : 1.0
+// Auteur : di-marco_a@pm.me
+// Date : 2019-05-01
+//-------------------------------------------------------------------
+// Version history
+//   v1.O - Initial version
+//   test and work on : mac mini (late 2014) & macOSX 10.13.6(High Sierra) 
+//-------------------------------------------------------------------
 var Accessory, Service, Characteristic, UUIDGen, FakeGatoHistoryService;
 var inherits = require('util').inherits;
 const fs = require('fs');
@@ -60,7 +71,6 @@ function MacOSXSysInfo(log, config) {
     this.log = log;
 	this.name = config["name"];
 	this.serial = config["serial"];
-	//this.cmd = config["cmd"];
     if(config["file"]) {
         this.readFile = config["file"];
     } else {
@@ -74,14 +84,6 @@ function MacOSXSysInfo(log, config) {
   
 	this.setUpServices();
 };
-
-//MacOSXSysInfo.prototype.getUptime = function (callback) {
-//	
-//	var data = fs.readFileSync("/tmp/_hb_uptime.txt", "utf-8");
-//	var uptime = data.substring(10, data.indexOf(",", data.indexOf(",", 0)+1));
-		
-//	callback(null, uptime);
-//};
 
 MacOSXSysInfo.prototype.getUptime = function (callback) {
 	var json = fs.readFileSync(this.readFile, "utf-8");
@@ -105,24 +107,12 @@ MacOSXSysInfo.prototype.getDisk = function (callback) {
 };
 
 MacOSXSysInfo.prototype.getAvgLoad = function (callback) {
-//	var data = fs.readFileSync("/tmp/_hb_uptime.txt", "utf-8");
-//	var load = data.substring(data.length - 15);
 	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
 	var load = obj.load;
 	
 	callback(null, load);
 };
-
-//MacOSXSysInfo.prototype.getAvgLoad = function (callback) {
-	
-//	var json = fs.readFileSync("/tmp/sys_mon.json", "utf-8");
-	//var json = '{"temperature":28.7, "fan":1796, "uptime":12.5, "load":6.9, "mem":1163}';
-//	var obj = JSON.parse(json);
-//	var load = parseFloat(obj.load).toFixed(1);
-//	callback(null, load);
-
-//};
 
 MacOSXSysInfo.prototype.getMem = function (callback) {
 	var json = fs.readFileSync(this.readFile, "utf-8");
@@ -142,7 +132,6 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		.setCharacteristic(Characteristic.Manufacturer, "di-marco_a.net")
 		.setCharacteristic(Characteristic.Model, this.name)
 		.setCharacteristic(Characteristic.SerialNumber, this.serial + "_" + packageFile.version)
-//		.setCharacteristic(Characteristic.SerialNumber, "042-SN-20190407-" + packageFile.version)
 		.setCharacteristic(Characteristic.FirmwareRevision, packageFile.version);
 	
 	this.fakeGatoHistoryService = new FakeGatoHistoryService("weather", this, { storage: 'fs' });
@@ -225,9 +214,6 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		var obj = JSON.parse(data);
 		var temperatureVal = (obj.temperature);
 
-		//var temperatureVal = parseFloat(data) / 1000;
-	//	var temperatureVal = parseFloat(data.replace(',', '.'));
-		//var temperatureVal = parseFloat(data);
 		temp = temperatureVal;
 		that.log.debug("update currentTemperatureCharacteristic value: " + temperatureVal);
 		return temperatureVal;

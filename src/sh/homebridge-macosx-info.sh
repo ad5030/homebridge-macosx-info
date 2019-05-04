@@ -2,14 +2,13 @@
 #-------------------------------------------------------------------
 #~ @(#) Name : homebridge-macosx-info.sh
 #~ @(#) Desc : Persist in file the macOSX sys infrmation needed by "homebridge-macosx-info" Homebridge/HomeKit plugin
-#~ @(#) version : 0.1
-# Auteur : @ad5030
-# Date : 2019-04-07
+#~ @(#) version : 1.0
+# Auteur : di-marco_a@pm.me
+# Date : 2019-05-01
 #-------------------------------------------------------------------
 # Version history
-#   v0.1 - Initial version
+#   v1.O - Initial version
 #   test and work on : mac mini (late 2014) & macOSX 10.13.6(High Sierra) 
-#       & must be adapt for other mac
 #-------------------------------------------------------------------
 #~ Usage : homebridge-macosx-info.sh
 #-------------------------------------------------------------------
@@ -38,5 +37,6 @@ _disk=${fields[4]//%/}
 
 echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
 }
+
 ## main ##
 sys_mon

@@ -1,6 +1,6 @@
 {
   "name": "homebridge-macosx-info",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A homebridge plugin that get macOSX information",
   "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
   "main": "index.js",

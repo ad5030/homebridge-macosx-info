@@ -1,5 +1,5 @@
 # homebridge-macosx-info
-*The current version is v0.2.3 (2019-05-05)*
+*The current version is v0.2.4 (2019-05-05)*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
@@ -22,7 +22,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ## Exemple of .json data response file
 ```json  
 {
-    "UpdateTime":"Sun Apr 21 22:38:07 CEST 2019",
+    "updateTime":"Sun Apr 21 22:38:07 CEST 2019",
     "temperature":30.7,
     "fan":1801,
     "uptime":"up 16:38, 2 users",

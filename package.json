@@ -1,6 +1,6 @@
 {
   "name": "homebridge-macosx-info",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "A homebridge plugin that get macOSX information",
   "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
   "main": "index.js",
@@ -9,12 +9,7 @@
     "homebridge-plugin",
     "homebridge",
     "Homekit",
-    "EVE.",
-    "macOSX",
-    "Apple Inc.",
-    "iOS",
-    "iPhone",
-    "iPad"
+    "EVE."
   ],
  "license": "MIT",
   "repository": {

@@ -1,5 +1,5 @@
 # homebridge-macosx-info
-*The current version is v0.1.5*
+*The current version is v0.1.8*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
@@ -14,12 +14,12 @@ Such as :
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 
-<div style="width:830; background-color:white; height:400px; overflow:scroll; overflow-x: scroll;overflow-y: hidden;">
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png width="30%" height="30%"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png width="5%" height="5%"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="30%" height="30%"/>
+<div style="width:380px; height:266px; overflow:scroll; overflow-x: scroll;overflow-y: hidden;">
+
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png></img>
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png></img>
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png></img>
 </div>
-<br>
 
 ## Exemple of .json data response file
 ```

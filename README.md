@@ -1,5 +1,5 @@
 # homebridge-macosx-info
-*The current version is v0.2.1 (2019-05-05)*
+*The current version is v0.2.2 (2019-05-05)*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
@@ -71,12 +71,12 @@ function sys_mon()
     _fan=${fields[8]}
 
     IFS=' ' read -ra STR <<< `uptime`   
-    _UPTIME="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
+    _uptime="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
 
-    _LOAD=`sysctl -n vm.loadavg` 
-    _LOAD="${_LOAD//[\{\}]}"
-    _LOAD="${_LOAD/ /}"
-    _LOAD="${_LOAD%?}"
+    _load=`sysctl -n vm.loadavg` 
+    _load="${_load//[\{\}]}"
+    _load="${_load/ /}"
+    _load="${_load%?}"
 
     read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
     _mem=${fields[1]}
@@ -84,8 +84,7 @@ function sys_mon()
     read -a fields <<<  `df -h / | grep /`
     _disk=${fields[4]//%/}
 
-    echo '{"UpdateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","load":"'${_LOAD}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
-
+    echo '{"UpdateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
 }
 ```
 

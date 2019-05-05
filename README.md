@@ -13,14 +13,14 @@ Such as :
 * UpdateTime
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
-<div style="width:590px; height:497px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png width="280px" height="497px"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png width="30px" height="30px"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="280px" height="497px"/>
+<div style="width:650px; height:533px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png width="300px" height="533px"/>
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png width="50px" height="50px"/>
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="300px" height="533px"/>
 </div>
 
 ## Exemple of .json data response file
-```
+```json  
 {
     "UpdateTime":"Sun Apr 21 22:38:07 CEST 2019",
     "temperature":30.7,
@@ -31,7 +31,6 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
     "disk":50
 }
 ```
-
 ## Prerequisites
 * Install <a href="https://brew.sh">Homebrew</a> *#Homebrew installs the stuff you need that Apple (or your Linux system) didn’t.*
 * Install <a href="https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS">Homebridge</a> on macOS
@@ -42,8 +41,8 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 
 ## Configuration
 ### Add this lines in homebridge congig.json file.
-```
-    "accessories": [
+```json    
+"accessories": [
         {
             "accessory": "MacOSXSysInfo",
             "name": "macOSX Info",
@@ -52,20 +51,20 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
         }
     ],
 ```
-The "/tmp/_homebridge-macosx-info.json" is a file where the temperature is temporarily measured. The default value of this is "/tmp/_homebridge-macosx-info.json".
+The "<span style="color:grey">*/tmp/_homebridge-macosx-info.json*</span>" is a file where the temperature is temporarily measured. The default value of this is "<span style="color:grey">*/tmp/_homebridge-macosx-info.json*</span>".
 
 "updateInterval" : is time in second of update measured temperature.
 
-The index.js call "/sh/homebridge-macosx-info.sh" shell script. You can find this script in the repository in "/sh" directory
+The index.js call "<span style="color:grey">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/sh" directory
 
-### Adapte "homebridge-macosx-info.sh" file in sh/ directory
+### Adapte "homebridge-macosx-info.sh" file in "sh" directory
 * Change or adapte path of "<a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a>" bin
 * Change or adapte path of temporary files : _homebridge-macosx-info.json
 
-```
+```sh
 function sys_mon()
 {
-    _TIME=`date`
+    _time=`date`
 
     read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
     _temp=${fields[7]//,/.}
@@ -85,7 +84,8 @@ function sys_mon()
     read -a fields <<<  `df -h / | grep /`
     _disk=${fields[4]//%/}
 
-    echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","load":"'${_LOAD}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
+    echo '{"UpdateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_UPTIME}'","load":"'${_LOAD}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
+
 }
 ```
 

@@ -4,7 +4,7 @@
   "description": "A homebridge plugin that get macOSX information",
   "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
   "main": "index.js",
-  "author": "AD5030 <di-marco_a@pm.me>",
+  "author": "AD5030 <adm@di-marco.net>",
   "keywords": [
     "homebridge-plugin",
     "homebridge",

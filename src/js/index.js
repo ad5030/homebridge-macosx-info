@@ -2,7 +2,7 @@
 //~ @(#) Name : index.js
 //~ @(#) Desc : 
 //~ @(#) version : 1.0
-// Auteur : di-marco_a@pm.me
+// Auteur : adm@di-marco.net
 // Date : 2019-05-05
 //-------------------------------------------------------------------
 // Version history

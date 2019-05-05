@@ -3,7 +3,7 @@
 #~ @(#) Name : homebridge-macosx-info.sh
 #~ @(#) Desc : Persist in file the macOSX sys infrmation needed by "homebridge-macosx-info" Homebridge/HomeKit plugin
 #~ @(#) version : 1.0
-# Auteur : di-marco_a@pm.me
+# Auteur : adm@di-marco.net
 # Date : 2019-05-05
 #-------------------------------------------------------------------
 # Version history

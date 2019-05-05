@@ -3,7 +3,8 @@
   "version": "0.0.4",
   "description": "A homebridge plugin that get macOSX information",
   "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
-  "author": "di-marco_a@pm.me",
+  "main": "index.js",
+  "author": "AD5030 <di-marco_a@pm.me>",
   "keywords": [
     "homebridge-plugin",
     "homebridge",
@@ -18,10 +19,10 @@
  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "ssh://git@r2d2.ddns.net:22/Users/git/ownGit/homebridge-macosx-info.git"
+    "url": "https://github.com/ad5030/homebridge-macosx-info.git"
   },
   "bugs": {
-    "url": "http://github.com/AD5030/homebridge-macosx-info/issues"
+    "url": "https://github.com/AD5030/homebridge-macosx-info/issues"
   },
   "engines": {
     "node": ">=11.10.1",

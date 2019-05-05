@@ -19,8 +19,8 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 <img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png width="5%" height="5%"/>
 <img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="30%" height="30%"/>
 </div>
+<br>
 
-##
 ## Exemple of .json data response file
 ```
 {

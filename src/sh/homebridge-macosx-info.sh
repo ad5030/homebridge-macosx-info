@@ -7,8 +7,7 @@
 # Date : 2019-05-05
 #-------------------------------------------------------------------
 # Version history
-#   v1.O - Initial version
-#   test and work on : mac mini (late 2014) & macOSX 10.13.6(High Sierra) 
+#   v1.O - Initial version - Test and work on : mac mini (late 2014) & macOSX 10.13.6(High Sierra) 
 #-------------------------------------------------------------------
 #~ Usage : homebridge-macosx-info.sh
 #-------------------------------------------------------------------

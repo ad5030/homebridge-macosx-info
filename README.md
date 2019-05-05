@@ -101,7 +101,7 @@ function sys_mon()
 ## Credits
 * The original HomeKit API work was done by <a href="https://twitter.com/khaost">KhaosT</a> in his <a href="https://github.com/KhaosT/HAP-NodeJS">HAP-NodeJS project<a/>.
 * <a href="https://github.com/simont77/fakegato-history">simont77 - fakegato-history</a>
-* <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc/</a>
+* <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc</a>
 
 
 ## Disclaimer

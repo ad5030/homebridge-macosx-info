@@ -1,5 +1,5 @@
 # homebridge-macosx-info
-*Current version is v0.0.4*
+*The current version is v0.0.4*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
@@ -42,9 +42,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install <a href="https://www.evehome.com/en/eve-app">EVE.</a> App on iPhone or iPad
 
 ## Configuration
-
 ### Add this lines in homebridge congig.json file.
-
 ```
     "accessories": [
         {
@@ -62,7 +60,6 @@ The "/tmp/_homebridge-macosx-info.json" is a file where the temperature is tempo
 The index.js call "/sh/homebridge-macosx-info.sh" shell script. You can find this script in the repository in "/sh" directory
 
 ### Adapte "homebridge-macosx-info.sh" file in sh/ directory
-
 * Change or adapte path of "<a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a>" bin
 * Change or adapte path of temporary files : _homebridge-macosx-info.json
 
@@ -93,26 +90,22 @@ function sys_mon()
 }
 ```
 
-## TODO
-
+## Todo
 - [ ] Worked on performance 
 - [x] Generate all the measures in a .json file.
 
 ## Known bugs
-
 - [x] Uptime error in "homebridge-macosx-info" after more than one day !
 - [ ] Temparature and fan mesures don't work on all Apple mac hardware.    
 
 ## Credits
-
+The original HomeKit API work was done by <a href="https://twitter.com/khaost">KhaosT</a> in his <a href="https://github.com/KhaosT/HAP-NodeJS">HAP-NodeJS project<a/>.
 * <a href="https://github.com/simont77/fakegato-history">simont77 - fakegato-history</a>
 * <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc/</a>
 
 
 ## Disclaimer
-
 I'm furnishing this software "as is". I do not provide any warranty of the item whatsoever, whether express, implied, or statutory, including, but not limited to, any warranty of merchantability or fitness for a particular purpose or any warranty that the contents of the item will be error-free. The development of this module is not supported by Apple Inc. or EVE. These vendors and me are not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.
 
 ## License
-
 is project is licensed under the MIT License - see the <a href="https://github.com/ad5030/homebridge-macosx-info/blob/master/LICENSE"> LICENSE</a> file for details

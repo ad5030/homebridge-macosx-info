@@ -13,10 +13,10 @@ Such as :
 * UpdateTime
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
-<div style="width:430px; height:355px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png width="200px" height="355px"/>
+<div style="width:510px; height:426px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png width="240px" height="426px"/>
 <img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png width="30px" height="30px"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="200px" height="355px"/>
+<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="240px" height="426px"/>
 </div>
 
 ## Exemple of .json data response file

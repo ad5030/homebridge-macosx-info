@@ -14,7 +14,7 @@ Such as :
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 
-<div style="width:380px; height:266px; overflow:scroll; overflow-x: scroll;overflow-y: hidden;">
+<div style="width:480px; height:266px; overflow:scroll; overflow-x: scroll;overflow-y: hidden;">
 
 <img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png></img>
 <img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png></img>

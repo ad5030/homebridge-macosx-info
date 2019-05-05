@@ -4,7 +4,7 @@
 #~ @(#) Desc : Persist in file the macOSX sys infrmation needed by "homebridge-macosx-info" Homebridge/HomeKit plugin
 #~ @(#) version : 1.0
 # Auteur : di-marco_a@pm.me
-# Date : 2019-05-01
+# Date : 2019-05-05
 #-------------------------------------------------------------------
 # Version history
 #   v1.O - Initial version
@@ -15,7 +15,7 @@
 
 function sys_mon()
 {
-_TIME=`date`
+_time=`date`
 
 read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
@@ -35,7 +35,7 @@ _mem=${fields[1]}
 read -a fields <<<  `df -h / | grep /`
 _disk=${fields[4]//%/}
 
-echo '{"UpdateTime":"'${_TIME}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
+echo '{"UpdateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
 }
 
 ## main ##

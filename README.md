@@ -34,11 +34,12 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ```
 
 ## Prerequisites
+* <a href="https://brew.sh">Homebrew</a> *#Homebrew installs the stuff you need that Apple (or your Linux system) didn’t.*
 * Install <a href="https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS">Homebridge</a> on macOS
+* Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS *(optional)*
 * Install <a href="https://nodejs.org/en/download/package-manager/#macos">node.js</a> on macOS
-* Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS (optional)
 * Install <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> on macOS
-* Install Apple iOS <a href="https://www.evehome.com/en/eve-app">EVE.</a> App on iPhone or iPad
+* Install <a href="https://www.evehome.com/en/eve-app">EVE.</a> App on iPhone or iPad
 
 ## Configuration
 

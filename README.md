@@ -10,7 +10,7 @@ Such as :
 * Free mem (Mo)
 * Disk avalable (%)
 * Load average (%)
-* UpdateTime
+* updateTime
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 <div style="width:650px; height:533px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
@@ -32,12 +32,12 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 }
 ```
 ## Prerequisites
-* Install <a href="https://brew.sh">Homebrew</a> *#Homebrew installs the stuff you need that Apple (or your Linux system) didn’t.*
+* Install <a href="https://brew.sh">Homebrew</a><span style="color:gray"> *(Homebrew installs the stuff you need that Apple didn’t)*</span>
 * Install <a href="https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS">Homebridge</a> on macOS
-* Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS *(optional)*
+* Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS <span style="color:gray">*(optional)</span>*
 * Install <a href="https://nodejs.org/en/download/package-manager/#macos">node.js</a> on macOS
 * Install <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> on macOS
-* Install <a href="https://www.evehome.com/en/eve-app">EVE.</a> App on iPhone or iPad
+* Install <a href="https://www.evehome.com/en/eve-app">eve.</a> app on iPhone/Pad or used "Home" app on macOSX Majave
 
 ## Configuration
 ### Add this lines in homebridge congig.json file.
@@ -51,11 +51,11 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
         }
     ],
 ```
-The "<span style="color:grey">*/tmp/_homebridge-macosx-info.json*</span>" is a file where the temperature is temporarily measured. The default value of this is "<span style="color:grey">*/tmp/_homebridge-macosx-info.json*</span>".
+The "<span style="color:gray">*/tmp/_homebridge-macosx-info.json*</span>" is a file where the temperature is temporarily measured. The default value of this is "<span style="color:gray">*/tmp/_homebridge-macosx-info.json*</span>".
 
 "updateInterval" : is time in second of update measured temperature.
 
-The index.js call "<span style="color:grey">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/sh" directory
+The index.js call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/sh" directory
 
 ### Adapte "homebridge-macosx-info.sh" file in "sh" directory
 * Change or adapte path of "<a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a>" bin

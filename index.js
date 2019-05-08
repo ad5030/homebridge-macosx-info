@@ -32,7 +32,7 @@ module.exports = function(homebridge) {
 
 function readUptime() {
 	const exec = require('child_process').exec;
-	var script = exec('~/r2d2/it/homekit/homebridge-macosx-info/sh/homebridge-macosx-info.sh',
+	var script = exec('src/sh/homebridge-macosx-info.sh',
 		(error, stdout, stderr) => {
 			if (error !== null) {
 				//this.log("exec error: " + ${error});

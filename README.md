@@ -65,7 +65,7 @@ The "<span style="color:gray">*/tmp/_homebridge-macosx-info.json*</span>" is a f
 
 "updateInterval" : is time in second of update measured temperature.
 
-The index.js call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/sh" directory
+The index.js call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/src/sh" directory
 
 ### Adapte "homebridge-macosx-info.sh" file in "sh" directory
 * Change or adapte path of "<a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a>" bin

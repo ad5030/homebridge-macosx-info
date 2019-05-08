@@ -11,7 +11,7 @@ Such as :
 * Fan speed (rpm)
 * Uptime
   * show how long system has been running
-* Free mem (Mo)
+* Free Mem (Mo)
 * Disk avalable (%)
 * Load average (%) 
   * the load average of the system over he last 1, 5, and 15 minute

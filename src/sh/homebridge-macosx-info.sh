@@ -4,7 +4,7 @@
 #~ @(#) Desc : Persist in file the macOSX sys infrmation needed by "homebridge-macosx-info" Homebridge/HomeKit plugin
 #~ @(#) version : 1.0
 # Auteur : adm@di-marco.net
-# Date : 2019-05-05
+# Date : 2019-05-06
 #-------------------------------------------------------------------
 # Version history
 #   v1.O - Initial version - Test and work on : mac mini (late 2014) & macOSX 10.13.6(High Sierra) 

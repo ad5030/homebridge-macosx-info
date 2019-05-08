@@ -112,12 +112,11 @@ MacOSXSysInfo.prototype.getAvgLoad = function (callback) {
 	callback(null, load);
 };
 
-MacOSXSysInfo.prototype.getMem = function (callback) {
+MacOSXSysInfo.prototype.getFreeMem = function (callback) {
 	var json = fs.readFileSync(this.readFile, "utf-8");
 	var obj = JSON.parse(json);
-	var mem = parseFloat(obj.mem);
-	callback(null, mem);
-
+	var freemem = parseFloat(obj.freemem);
+	callback(null, freemem);
 };
 
 MacOSXSysInfo.prototype.setUpServices = function () {
@@ -159,7 +158,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	load.UUID = uuid2;
 	
 	let uuid3 = UUIDGen.generate(that.name + '-Mem');
-	mem = function () {
+	freemem = function () {
 		Characteristic.call(this, 'Free Mem (Mo) :', uuid3);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
@@ -167,8 +166,8 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(mem, Characteristic);
-	mem.UUID = uuid3;
+	inherits(freemem, Characteristic);
+	freemem.UUID = uuid3;
 
 	let uuid4 = UUIDGen.generate(that.name + '-Fan');
 	fan = function () {
@@ -200,8 +199,8 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		.on('get', this.getUptime.bind(this));
 	this.macOSXService.getCharacteristic(load)
 		.on('get', this.getAvgLoad.bind(this));
-	this.macOSXService.getCharacteristic(mem)
-		.on('get', this.getMem.bind(this));
+	this.macOSXService.getCharacteristic(freemem)
+		.on('get', this.getFreeMem.bind(this));
 	this.macOSXService.getCharacteristic(fan)
 		.on('get', this.getFan.bind(this));
 		this.macOSXService.getCharacteristic(disk)

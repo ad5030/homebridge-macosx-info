@@ -12,6 +12,8 @@
 #~ Usage : homebridge-macosx-info.sh
 #-------------------------------------------------------------------
 
+JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json
+
 function sys_mon()
 {
 _time=`date`
@@ -29,12 +31,12 @@ _load="${_load/ /}"
 _load="${_load%?}"
 
 read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
-_mem=${fields[1]}
+_freemem=${fields[1]}
 
 read -a fields <<<  `df -h / | grep /`
 _disk=${fields[4]//%/}
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","mem":'${_mem:0:6}',"disk":'${_disk}'}' > /tmp/_homebridge-macosx-info.json
+echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}'}' > $JSON_DATA_FILE
 }
 
 ## main ##

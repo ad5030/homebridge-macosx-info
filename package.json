@@ -9,7 +9,8 @@
     "homebridge-plugin",
     "homebridge",
     "Homekit",
-    "EVE."
+    "macOS",
+    "EVE"
   ],
  "license": "MIT",
   "repository": {
@@ -24,7 +25,8 @@
     "homebridge": ">=0.4.48"
   },
   "dependencies": {
-    "fakegato-history": "^0.4.0",
-    "request": "^2.65.0"
+    "moment": "*",
+    "fakegato-history": ">=0.5.3",
+    "homebridge": ">=0.4.0"
   }
 }

@@ -1,7 +1,7 @@
 #!/bin/sh
 #-------------------------------------------------------------------
 #~ @(#) Name : .sync.sh
-#~ @(#) Desc : Sync projet and deploy in local host 
+#~ @(#) Desc : Sync projet and deploy in local host for test
 #~ @(#) version : na
 # Auteur : adm@di-marco.net
 # Date : 2019-05-01

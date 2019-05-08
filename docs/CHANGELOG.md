@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
   
-## v0.2.7 2019-05-08
+## v0.2.8 2019-05-08
 - Minor change in `index.js` to call `homebridge-macosx-info.sh`
 - Minor change in `.json` respons file
 - Performance

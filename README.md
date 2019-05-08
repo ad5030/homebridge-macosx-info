@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 
-*See [Changelog](docs/CHANGELOG.md)*.
+*See [Changelog](docs/CHANGELOG.md)*
 
 This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
@@ -101,7 +101,7 @@ function sys_mon()
 ## Todo
 - [x] Generate all the measures in a .json file. 
 - [ ] Worked on performance
-  - [x] Use only sh built-in sh (no sed & awk) 
+  - [x] Use only sh built-in (no sed & awk) 
 
 
 ## Known bugs

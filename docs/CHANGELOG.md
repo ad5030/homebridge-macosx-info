@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Minor change in `.json` respons file
 - Performance
   - Now no `sed` & `awk` in shell script
-- Added the compatibility list of Apple mac hardware
+- Added the compatibility list of Apple mac hardware (with check_osx_smc)
 - Added CHANGELOG.md file
 - Complete the README.md file
 - Opitimized screenshots

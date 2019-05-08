@@ -14,7 +14,7 @@ Such as :
 * Free Mem (Mo)
 * Disk avalable (%)
 * Load average (%) 
-  * the load average of the system over he last 1, 5, and 15 minute
+  * the load average of the system over the last 1, 5, and 15 minute
 * updateTime
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.

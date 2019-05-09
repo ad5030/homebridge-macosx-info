@@ -12,13 +12,15 @@
 #~ Usage : homebridge-macosx-info.sh
 #-------------------------------------------------------------------
 
-JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json
+JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json # path of .json respons file 
+CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc # path of check_osx_smc binary
 
 function sys_mon()
 {
 _time=`date`
 
-read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+# See the hardware compatibility -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md
+read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
 _fan=${fields[8]}
 

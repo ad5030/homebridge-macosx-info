@@ -42,7 +42,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS <span style="color:gray">*(optional)</span>*
 * Install <a href="https://nodejs.org/en/download/package-manager/#macos">node.js</a> on macOS
 * Install <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> on macOS
-* Install <a href="https://www.evehome.com/en/eve-app">Eve.</a> app on iPhone/Pad or used "Home" app on macOSX Majave
+* Install <a href="https://www.evehome.com/en/eve-app">Eve.</a> app on iPhone/Pad (for all availables plugin function), or it's possible to used "Home" app on only macOSX Majave !
 
 ## Installation
 Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool to install homebridge-macosx-info, and execute the command line below
@@ -50,9 +50,8 @@ Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool
 ```npm i homebridge-macosx-info```
 
 ## Configuration
-### homebridge config.json file.
-
-#### Add this lines in config.json
+### homebridge config.json file
+Add this lines in config.json
 ```json    
 "accessories": [
         {
@@ -72,11 +71,11 @@ Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool
 | `updateInterval`| is time in ms of data update|yes|null|
 | `cmd`           | homebridge-macosx-info.sh path|yes|default : "/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh"|
 
-The index.js call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/src/sh" directory
+The `index.js` call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in `/src/sh` directory
 
 ### Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
-* Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
-* Change or adapte path of <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> binary -> `var CHECK_OSX_SMC`
+1. Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
+2. Change or adapte path of <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> binary -> `var CHECK_OSX_SMC`
 
 ```sh
 JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json

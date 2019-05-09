@@ -7,15 +7,16 @@
 homebridge-macosx-info is homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
 Such as :
+* updateTime
 * Temperature (C°)
 * Fan speed (rpm)
 * Uptime
   * show how long system has been running
-* Free Mem (Mo)
-* Disk avalable (%)
 * Load average (%) 
   * the load average of the system over the last 1, 5, and 15 minute
-* updateTime
+* Free Mem (Mo)
+* Disk avalable (%)
+
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 <div style="width:650px; height:533px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
@@ -42,7 +43,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS <span style="color:gray">*(optional)</span>*
 * Install <a href="https://nodejs.org/en/download/package-manager/#macos">node.js</a> on macOS
 * Install <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> on macOS
-* Install <a href="https://www.evehome.com/en/eve-app">Eve.</a> app on iPhone/Pad (for all availables plugin function), or it's possible to used "Home" app on only macOSX Majave !
+* Install <a href="https://www.evehome.com/en/eve-app">Eve.</a> app on iPhone/Pad (for all availables plugin function), or it's possible to used "Home" app, buit only on macOSX Majave !
 
 ## Installation
 Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool to install homebridge-macosx-info, and execute the command line below
@@ -67,11 +68,13 @@ Add this lines in config.json
 |-----------------|------|-----------|-------|
 | `accessory`     | Name of accessory|No|MacOSXSysInfo|
 | `name`          | a human-readable name for your plugin|No|macOSX Info|
-| `file`          | .json respons file|yes|default : "/tmp/homebridge-macosx-info.json"|
+| `file`          | .json respons file|yes|default : `/tmp/_homebridge-macosx-info.json`|
 | `updateInterval`| is time in ms of data update|yes|null|
-| `cmd`           | homebridge-macosx-info.sh path|yes|default : "/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh"|
+| `cmd`           | homebridge-macosx-info.sh path|yes|default : `/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh`|
 
-The `index.js` call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in `/src/sh` directory
+Note : 
+    1. The `index.js` call *`<PATH of Node Modele>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
+    2. It's possible that you can change the path of `homebridge-macosx-info.sh` in `index.js' 
 
 ### Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
 1. Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`

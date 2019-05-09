@@ -1,6 +1,6 @@
 # homebridge-macosx-info
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Donate](https://img.shields.io/badge/donate-paypal-yellowgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9MC83TRGACQPJ&source=url)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 
 *See [changelog](docs/CHANGELOG.md)*
 
@@ -51,7 +51,7 @@ Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool
 ```npm i homebridge-macosx-info```
 
 ## Configuration
-### homebridge config.json file
+### STEP 1: homebridge config.json file
 Add this lines in config.json
 ```json    
 "accessories": [
@@ -70,15 +70,19 @@ Add this lines in config.json
 | `name`          | a human-readable name for your plugin|No|macOSX Info|
 | `file`          | .json respons file|yes|default : `/tmp/_homebridge-macosx-info.json`|
 | `updateInterval`| is time in ms of data update|yes|null|
-| `cmd`           | homebridge-macosx-info.sh path|yes|default : `/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh`|
 
-Note : 
-
-    1. The `index.js` call *`<PATH of Node Modele>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
-
-    2. It's possible that you can change the path of `homebridge-macosx-info.sh` in `index.js' 
-
-### Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
+Note: 
+1. The `index.js` call *`<PATH of Node Modele>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
+2. It's possible that you can change the path of `homebridge-macosx-info.sh` shell script in `index.js`
+```js
+var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh',
+		(error, stdout, stderr) => {
+			if (error !== null) {
+				//this.log("exec error: " + ${error});
+			}
+		});		 
+```
+### STEP 2: homebridge config.json file Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
 1. Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
 2. Change or adapte path of <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> binary -> `var CHECK_OSX_SMC`
 

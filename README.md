@@ -73,7 +73,9 @@ Add this lines in config.json
 | `cmd`           | homebridge-macosx-info.sh path|yes|default : `/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh`|
 
 Note : 
+
     1. The `index.js` call *`<PATH of Node Modele>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
+
     2. It's possible that you can change the path of `homebridge-macosx-info.sh` in `index.js' 
 
 ### Adapte "homebridge-macosx-info.sh" file in "src/sh" directory

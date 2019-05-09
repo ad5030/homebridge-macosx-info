@@ -32,12 +32,12 @@ module.exports = function(homebridge) {
 
 function readUptime() {
 	const exec = require('child_process').exec;
-	var script = exec('src/sh/homebridge-macosx-info.sh',
+var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh',
 		(error, stdout, stderr) => {
 			if (error !== null) {
 				//this.log("exec error: " + ${error});
 			}
-		});			
+		});		
 };
 
 function isConfig(configFile, type, name) {
@@ -72,7 +72,7 @@ function MacOSXSysInfo(log, config) {
     if(config["file"]) {
         this.readFile = config["file"];
     } else {
-        this.readFile = "/tmp/homebridge-macosx-info.json";
+        this.readFile = "/tmp/_homebridge-macosx-info.json";
 	}
   if(config["updateInterval"] && config["updateInterval"] > 0) {
         this.updateInterval = config["updateInterval"];

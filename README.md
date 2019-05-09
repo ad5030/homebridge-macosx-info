@@ -1,10 +1,10 @@
 # homebridge-macosx-info
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Donate](https://img.shields.io/badge/donate-paypal-yellowgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9MC83TRGACQPJ&source=url)
 
-*See [Changelog](docs/CHANGELOG.md)*
+*See [changelog](docs/CHANGELOG.md)*
 
-This homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
+homebridge-macosx-info is homebridge plugin for Apple HomeKit, get and return somes systems informations from macOSX computer. 
 
 Such as :
 * Temperature (C°)
@@ -45,12 +45,14 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install <a href="https://www.evehome.com/en/eve-app">Eve.</a> app on iPhone/Pad or used "Home" app on macOSX Majave
 
 ## Installation
-Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool to install homebridge-macosx-info. And type the command line below
+Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool to install homebridge-macosx-info, and execute the command line below
 
 ```npm i homebridge-macosx-info```
 
 ## Configuration
-### Add this lines in homebridge config.json file.
+### homebridge config.json file.
+
+#### Add this lines in config.json
 ```json    
 "accessories": [
         {
@@ -61,47 +63,56 @@ Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool
         }
     ],
 ```
-The "<span style="color:gray">*/tmp/_homebridge-macosx-info.json*</span>" is a file where the temperature is temporarily measured. The default value of this is "<span style="color:gray">*/tmp/_homebridge-macosx-info.json*</span>".
 
-"updateInterval" : is time in second of update measured temperature.
+| Parameter       | Note | Optionnal | value | 
+|-----------------|------|-----------|-------|
+| `accessory`     | Name of accessory|No|MacOSXSysInfo|
+| `name`          | a human-readable name for your plugin|No|macOSX Info|
+| `file`          | .json respons file|yes|default : "/tmp/homebridge-macosx-info.json"|
+| `updateInterval`| is time in ms of data update|yes|null|
+| `cmd`           | homebridge-macosx-info.sh path|yes|default : "/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh"|
 
 The index.js call "<span style="color:gray">*/sh/homebridge-macosx-info.sh*</span>" shell script. You can find this script in the repository in "/src/sh" directory
 
-### Adapte "homebridge-macosx-info.sh" file in "sh" directory
-* Change or adapte path of "<a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a>" bin
-* Change or adapte path of temporary files : _homebridge-macosx-info.json
+### Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
+* Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
+* Change or adapte path of <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> binary -> `var CHECK_OSX_SMC`
 
 ```sh
+JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json
+CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc
+
 function sys_mon()
 {
-    _time=`date`
+_time=`date`
 
-    read -a fields <<< `~/r2d2/it/script/check_osx_smc -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
-    _temp=${fields[7]//,/.}
-    _fan=${fields[8]}
+# See the hardware compatibility -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md
+read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+_temp=${fields[7]//,/.}
+_fan=${fields[8]}
 
-    IFS=' ' read -ra STR <<< `uptime`   
-    _uptime="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
+IFS=' ' read -ra STR <<< `uptime`   
+_uptime="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
 
-    _load=`sysctl -n vm.loadavg` 
-    _load="${_load//[\{\}]}"
-    _load="${_load/ /}"
-    _load="${_load%?}"
+_load=`sysctl -n vm.loadavg` 
+_load="${_load//[\{\}]}"
+_load="${_load/ /}"
+_load="${_load%?}"
 
-    read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
-    _freemem=${fields[1]}
+read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
+_freemem=${fields[1]}
 
-    read -a fields <<<  `df -h / | grep /`
-    _disk=${fields[4]//%/}
+read -a fields <<<  `df -h / | grep /`
+_disk=${fields[4]//%/}
 
-    echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}'}' > $JSON_DATA_FILE
+echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}'}' > $JSON_DATA_FILE
 }
 ```
 
 ## Todo
-- [x] Generate all the measures in a .json file. 
+- [x] Generate all the measures in a .json file
 - [ ] Worked on performance
-  - [x] Use only sh built-in (no sed & awk) 
+  - [x] Use only sh built-in (no sed & no awk) 
 
 
 ## Known bugs
@@ -118,4 +129,4 @@ function sys_mon()
 I'm furnishing this software "as is". I do not provide any warranty of the item whatsoever, whether express, implied, or statutory, including, but not limited to, any warranty of merchantability or fitness for a particular purpose or any warranty that the contents of the item will be error-free. The development of this module is not supported by Apple Inc. or eve. These vendors and me are not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.
 
 ## License
-is project is licensed under the MIT License - see the <a href="https://github.com/ad5030/homebridge-macosx-info/blob/master/LICENSE"> LICENSE</a> file for details
+is project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details

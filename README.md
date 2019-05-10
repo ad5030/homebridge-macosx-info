@@ -19,11 +19,10 @@ Such as :
 
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
-<div style="width:650px; height:533px; overflow:scroll; overflow-x: scroll;overflow-y: hidden">
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_1.png width="300px" height="533px"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/.fake.png width="50px" height="50px"/>
-<img style=" float:left; display:inline" src=https://di-marco.net/screenshots/screenshot_2.png width="300px" height="533px"/>
-</div>
+
+![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_1.png)
+![homebridge-macos-info, Eve., screenshot](screenshots/.fake.png)
+![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_2.png)
 
 ## Exemple of .json data response file
 ```json  
@@ -39,14 +38,14 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ```
 ## Prerequisites
 * Install [Homebrew](https://brew.sh)<span style="color:gray"> *(Homebrew installs the stuff you need that Apple didn’t)*</span>
-* Install <a href="https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS">Homebridge</a> on macOS
-* Install <a href="https://github.com/oznu/homebridge-config-ui-x#readme">Homebridge Config UI X</a> on macOS <span style="color:gray">*(optional)</span>*
-* Install <a href="https://nodejs.org/en/download/package-manager/#macos">node.js</a> on macOS
-* Install <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> on macOS
-* Install <a href="https://www.evehome.com/en/eve-app">Eve.</a> app on iPhone/Pad (for all availables plugin function), or it's possible to used "Home" app, buit only on macOSX Majave !
+* Install [Homebridge](https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS) on macOS
+* Install [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x#readme) on macOS <span style="color:gray">*(optional)</span>*
+* Install [node.js](https://nodejs.org/en/download/package-manager/#macos) on macOS
+* Install [heck_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) on macOS
+* Install [Eve.app](https://www.evehome.com/en/eve-app) on iOS (for all availables plugin function), or it's possible to used "Home" app, but only on macOSX Majave and iOS (all plugin function aren't availables on this app !)
 
 ## Installation
-Used <a href="https://www.npmjs.com/package/homebridge-macosx-info">npm</a> tool to install homebridge-macosx-info, and execute the command line below
+Used [npm](https://www.npmjs.com/package/homebridge-macosx-info) tool to install homebridge-macosx-info, and execute the command line below
 
 ```npm i homebridge-macosx-info```
 
@@ -66,12 +65,12 @@ Add this lines in config.json
 
 | Parameter       | Note | Optionnal | value | 
 |-----------------|------|-----------|-------|
-| `accessory`     | Name of accessory|No|MacOSXSysInfo|
-| `name`          | a human-readable name for your plugin|No|macOSX Info|
+| `accessory`     | Name of accessory|No|`MacOSXSysInfo`|
+| `name`          | a human-readable name for your plugin|No|`macOSX Info`|
 | `file`          | .json respons file|yes|default : `/tmp/_homebridge-macosx-info.json`|
-| `updateInterval`| is time in ms of data update|yes|null|
+| `updateInterval`| is time in ms of data update|yes|default : `null`|
 
-Note: 
+_Note:_ 
 1. The `index.js` call *`<PATH of Node Modele>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
 2. It's possible that you can change the path of `homebridge-macosx-info.sh` shell script in `index.js`
 ```js
@@ -84,7 +83,7 @@ var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/hom
 ```
 ### STEP 2: homebridge config.json file Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
 1. Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
-2. Change or adapte path of <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> binary -> `var CHECK_OSX_SMC`
+2. Change or adapte path of [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary -> `var CHECK_OSX_SMC`
 
 ```sh
 JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json
@@ -125,12 +124,13 @@ echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}
 
 ## Known bugs
 - [x] Uptime error in "homebridge-macosx-info" after more than one day ! 
-- [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">check_osx_smc</a> binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md)  
+- [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md)  
 
 ## Credits
-* The original HomeKit API work was done by <a href="https://twitter.com/khaost">KhaosT</a> in his <a href="https://github.com/KhaosT/HAP-NodeJS">HAP-NodeJS project<a/>.
-* <a href="https://github.com/simont77/fakegato-history">simont77 - fakegato-history</a>
-* <a href="https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc">Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc</a>
+* The original HomeKit API work was done by [KhaosT](https://twitter.com/khaost) in his [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) project
+* [simont77 - fakegato-history](https://github.com/simont77/fakegato-history)
+* [Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc)
+
 
 
 ## Disclaimer

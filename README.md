@@ -1,9 +1,9 @@
 # homebridge-macosx-info
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) 
 [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 [![GitHub last commit](https://img.shields.io/github/last-commit/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
 [![GitHub license](https://img.shields.io/github/license/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 
 *See [changelog](docs/CHANGELOG.md)*
 
@@ -53,7 +53,7 @@ Used [npm](https://www.npmjs.com/package/homebridge-macosx-info) tool to install
 ```npm i homebridge-macosx-info```
 
 ## Configuration
-### STEP 1: homebridge config.json file
+### STEP 1 : homebridge config.json file
 Add this lines in config.json
 ```json    
 "accessories": [
@@ -84,7 +84,7 @@ var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/hom
 			}
 		});		 
 ```
-### STEP 2: homebridge config.json file Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
+### STEP 2 : homebridge config.json file Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
 1. Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
 2. Change or adapte path of [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary -> `var CHECK_OSX_SMC`
 
@@ -118,6 +118,15 @@ _disk=${fields[4]//%/}
 echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}'}' > $JSON_DATA_FILE
 }
 ```
+
+### STEP 3 : restart homebridge 
+Combine the two commands in a terminal to restart homebridge background process
+
+ - `launchctl unload ~/Library/LaunchAgents/com.homebridge.server.plist`
+ - `launchctl load ~/Library/LaunchAgents/com.homebridge.server.plist`
+
+_Note:_ 
+Commands only avalable for macOS 
 
 ## Todo
 - [x] Generate all the measures in a .json file

@@ -1,7 +1,7 @@
 # homebridge-macosx-info
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) 
 [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
-[![GitHub last commit](https://img.shields.io/github/last-commit/ad5030/homebridge-macosx-info.svg](https://github.com/ad5030/homebridge-macosx-info)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
 [![GitHub license](https://img.shields.io/github/license/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
 

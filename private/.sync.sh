@@ -15,7 +15,7 @@
 ENV=PORDUCTION
 SRC=../$(dirname $0)
 USER_TARGET='AD' # User name
-HOST_TARGET='192.168.42.3' # hHst to deploy inside port is 192.168.42.3 @ outside host is $HOST_TARGET
+HOST_TARGET='192.168.42.3' #host for test only
 PATH_TARGET='~/r2d2/it/homekit/homebridge-macosx-info' # Path of script directory 
 NODE_MODULE_TARGET='/usr/local/lib/node_modules/homebridge-macosx-info'
 

@@ -73,9 +73,9 @@ Add this lines in config.json
 | `file`          | .json respons file|yes|default : `/tmp/_homebridge-macosx-info.json`|
 | `updateInterval`| is time in ms of data update|yes|default : `null`|
 
-_Note:_ 
-1. The `index.js` call *`<PATH of Node Module>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
-2. It's possible that you can change the path of `homebridge-macosx-info.sh` shell script in `index.js`
+>Note : 
+>1. The `index.js` call *`<PATH of Node Module>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
+>2. It's possible that you can change the path of `homebridge-macosx-info.sh` shell script in `index.js`
 ```js
 var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh',
 		(error, stdout, stderr) => {
@@ -125,7 +125,7 @@ Combine the two commands in a terminal to restart homebridge background process
  - `launchctl unload ~/Library/LaunchAgents/com.homebridge.server.plist`
  - `launchctl load ~/Library/LaunchAgents/com.homebridge.server.plist`
 
-_Note:_ 
+>Note : 
 This commands are only avalable for macOS 
 
 ## Todo

@@ -25,7 +25,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ![homebridge-macos-info, Eve., screenshot](screenshots/.fake.png)
 ![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_2.png)
 
->(c) Screenshots are taken from the Elgato Eve app
+>(c) Screenshots are taken from the Elgato Eve.app
 
 ## Exemple of .json data response file
 ```json  

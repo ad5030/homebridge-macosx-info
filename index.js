@@ -68,7 +68,6 @@ function MacOSXSysInfo(log, config) {
 
     this.log = log;
 	this.name = config["name"];
-	this.serial = config["serial"];
     if(config["file"]) {
         this.readFile = config["file"];
     } else {
@@ -126,9 +125,9 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	
 	this.infoService = new Service.AccessoryInformation();
 	this.infoService
-		.setCharacteristic(Characteristic.Manufacturer, "di-marco_a.net")
+		.setCharacteristic(Characteristic.Manufacturer, "@ad5030")
 		.setCharacteristic(Characteristic.Model, this.name)
-		.setCharacteristic(Characteristic.SerialNumber, this.serial + "_" + packageFile.version)
+		.setCharacteristic(Characteristic.SerialNumber, "042-SN-20190505" + "_" + packageFile.version)
 		.setCharacteristic(Characteristic.FirmwareRevision, packageFile.version);
 	
 	this.fakeGatoHistoryService = new FakeGatoHistoryService("weather", this, { storage: 'fs' });

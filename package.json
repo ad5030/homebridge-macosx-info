@@ -1,16 +1,19 @@
 {
   "name": "homebridge-macosx-info",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "A homebridge plugin that get macOSX information",
-  "homepage": "https://github.com/AD5030/homebridge-macosx-info#readme",
+  "homepage": "https://github.com/ad5030/homebridge-macosx-info#readme",
   "main": "index.js",
-  "author": "AD5030 <adm@di-marco.net>",
+  "author": "ad5030 <adm@di-marco.net>",
   "keywords": [
     "homebridge-plugin",
     "homebridge",
     "Homekit",
     "macOS",
-    "EVE"
+    "EVE.",
+    "Apple Inc.",
+    "siri",
+    "home"
   ],
  "license": "MIT",
   "repository": {
@@ -18,7 +21,7 @@
     "url": "https://github.com/ad5030/homebridge-macosx-info.git"
   },
   "bugs": {
-    "url": "https://github.com/AD5030/homebridge-macosx-info/issues"
+    "url": "https://github.com/ad5030/homebridge-macosx-info/issues"
   },
   "engines": {
     "node": ">=11.10.1",

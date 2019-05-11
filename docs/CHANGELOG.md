@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v0.2.10 2019-05-10 
+- Deleted `serial` entry in `config.json`
+- Minor change in `README.md` to specify installation steps
+  
 ## v0.2.9 2019-05-09 
 - Minor change in `README.md` to specify installation steps
 - Add constants `JSON_DATA_FILE` & `CHECK_OSX_SMC` in the shell script

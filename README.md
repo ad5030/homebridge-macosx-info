@@ -133,8 +133,8 @@ This commands are only avalable for macOS
 
 
 ## Known bugs
-- [x] Uptime error in "homebridge-macosx-info" after more than one day ! ([#1](issues/1))
-- [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md) ([#2](issues/2))
+- [x] Uptime error in "homebridge-macosx-info" after more than one day ! [(#1)](https://github.com/ad5030/homebridge-macosx-info/issues/1)
+- [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md) [(#2)](https://github.com/ad5030/homebridge-macosx-info/issues/1)
 
 ## Credits
 * The original HomeKit API work was done by [KhaosT](https://twitter.com/khaost) in his [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) project

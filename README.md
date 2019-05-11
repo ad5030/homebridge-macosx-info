@@ -1,8 +1,6 @@
 # homebridge-macosx-info
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) 
 [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
-[![GitHub last commit](https://img.shields.io/github/last-commit/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
 [![GitHub license](https://img.shields.io/github/license/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
 
 *See [changelog](docs/CHANGELOG.md)*
@@ -41,9 +39,9 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ```
 ## Prerequisites
 * Install [Homebrew](https://brew.sh)<span style="color:gray"> *(Homebrew installs the stuff you need that Apple didn’t)*</span>
+* Install [node.js](https://nodejs.org/en/download/package-manager/#macos) on macOS
 * Install [Homebridge](https://github.com/nfarina/homebridge/wiki/Install-Homebridge-on-macOS) on macOS
 * Install [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x#readme) on macOS <span style="color:gray">*(optional)</span>*
-* Install [node.js](https://nodejs.org/en/download/package-manager/#macos) on macOS
 * Install [check_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) on macOS
 * Install [Eve.app](https://www.evehome.com/en/eve-app) on iOS (for all availables plugin function), or it's possible to used "Home" app, but only on macOSX Majave and iOS (all plugin function aren't availables on this app !)
 
@@ -126,7 +124,7 @@ Combine the two commands in a terminal to restart homebridge background process
  - `launchctl load ~/Library/LaunchAgents/com.homebridge.server.plist`
 
 _Note:_ 
-Commands only avalable for macOS 
+This commands are only avalable for macOS 
 
 ## Todo
 - [x] Generate all the measures in a .json file
@@ -135,8 +133,8 @@ Commands only avalable for macOS
 
 
 ## Known bugs
-- [x] Uptime error in "homebridge-macosx-info" after more than one day ! 
-- [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md)  
+- [x] Uptime error in "homebridge-macosx-info" after more than one day ! ([#1](issues/1))
+- [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md) ([#2](issues/2))
 
 ## Credits
 * The original HomeKit API work was done by [KhaosT](https://twitter.com/khaost) in his [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) project

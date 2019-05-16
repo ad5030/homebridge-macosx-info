@@ -37,7 +37,7 @@ var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/hom
 			if (error !== null) {
 				//this.log("exec error: " + ${error});
 			}
-		});		
+		});	
 };
 
 function isConfig(configFile, type, name) {
@@ -69,9 +69,13 @@ function MacOSXSysInfo(log, config) {
     this.log = log;
 	this.name = config["name"];
     if(config["file"]) {
-        this.readFile = config["file"];
+		this.readFile = config["file"];
+		//let jsonData = require(this.readFile);
+		//this.user = jsonData.user;
     } else {
-        this.readFile = "/tmp/_homebridge-macosx-info.json";
+		this.readFile = "/tmp/_homebridge-macosx-info.json";
+		//let jsonData = require(this.readFile);
+		//var user = jsonData.user;
 	}
   if(config["updateInterval"] && config["updateInterval"] > 0) {
         this.updateInterval = config["updateInterval"];
@@ -116,6 +120,15 @@ MacOSXSysInfo.prototype.getFreeMem = function (callback) {
 	var obj = JSON.parse(json);
 	var freemem = parseFloat(obj.freemem);
 	callback(null, freemem);
+};
+
+MacOSXSysInfo.prototype.getUser = function (callback) {
+	var json = fs.readFileSync(this.readFile, "utf-8");
+	var obj = JSON.parse(json);
+	var user = parseFloat(obj.user);
+	//jsonData = require(this.readFile);
+	//var user = jsonData.user;
+	callback(null, user);
 };
 
 MacOSXSysInfo.prototype.setUpServices = function () {
@@ -192,8 +205,20 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	inherits(disk, Characteristic);
 	disk.UUID = uuid5;
 
+	let uuid6 = UUIDGen.generate(that.name + '-User');
+	user = function () {
+		Characteristic.call(this, 'Users (nb) :', uuid6);
+		this.setProps({
+			format: Characteristic.Formats.STRING,
+			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+		});
+		this.value = this.getDefaultValue();
+	};
+	inherits(user, Characteristic);
+	user.UUID = uuid6;
+
 	this.macOSXService = new Service.TemperatureSensor(that.name);
-	var currentTemperatureCharacteristic = this.macOSXService.getCharacteristic(Characteristic.CurrentTemperature);
+	var currentTemperatureCharacteristic = this.macOSXService.getCharacteristic(Characteristic.CurrentTemperature);		
 	this.macOSXService.getCharacteristic(info)
 		.on('get', this.getUptime.bind(this));
 	this.macOSXService.getCharacteristic(load)
@@ -202,9 +227,11 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		.on('get', this.getFreeMem.bind(this));
 	this.macOSXService.getCharacteristic(fan)
 		.on('get', this.getFan.bind(this));
-		this.macOSXService.getCharacteristic(disk)
+	this.macOSXService.getCharacteristic(disk)
 		.on('get', this.getDisk.bind(this));
-		function getCurrentTemperature() {
+	this.macOSXService.getCharacteristic(user)
+		.on('get', this.getUser.bind(this));
+	function getCurrentTemperature() {
 		var data = fs.readFileSync(that.readFile, "utf-8");
 
 		var obj = JSON.parse(data);
@@ -224,8 +251,8 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 			
 			that.log("Temperature: " + temp);
 			this.fakeGatoHistoryService.addEntry({time: new Date().getTime() / 1000, temp: temp});
-			//this.fakeGatoHistoryService.addEntry({time: new Date().getTime(), temp: temp});
-			
+			//this.fakeGatoHistoryService.addEntry({time: new Date().getTime(), temp: temp});	
+
 			readUptime();
 			
 		}, that.updateInterval);

@@ -17,6 +17,7 @@ Such as :
   * the load average of the system over the last 1, 5, and 15 minute
 * Free Mem (Mo)
 * Disk avalable (%)
+* Users (nb)
 
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
@@ -36,7 +37,8 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
     "uptime":"up 16:38, 2 users",
     "load":"3.15 1.97 1.82",
     "freemem":422.35,
-    "disk":50
+    "disk":50,
+    "user":2
 }
 ```
 ## Prerequisites
@@ -89,8 +91,8 @@ var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/hom
 2. Change or adapte path of [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary -> `var CHECK_OSX_SMC`
 
 ```sh
-JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json
-CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc
+JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json # path of .json respons file 
+CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc # path of check_osx_smc binary
 
 function sys_mon()
 {
@@ -101,13 +103,15 @@ read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
 _fan=${fields[8]}
 
-IFS=' ' read -ra STR <<< `uptime`   
-_uptime="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
+_uptime=`uptime | cut -d " " -f2- |  sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'`
 
 _load=`sysctl -n vm.loadavg` 
 _load="${_load//[\{\}]}"
 _load="${_load/ /}"
 _load="${_load%?}"
+
+_user=`who | wc -l`
+_user="${_user// /}"
 
 read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
 _freemem=${fields[1]}
@@ -115,7 +119,7 @@ _freemem=${fields[1]}
 read -a fields <<<  `df -h / | grep /`
 _disk=${fields[4]//%/}
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}'}' > $JSON_DATA_FILE
+echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}',"user":'${_user}'}' > $JSON_DATA_FILE
 }
 ```
 
@@ -133,7 +137,6 @@ This commands are only avalable for macOS
 - [ ] Worked on performance
   - [x] Use only sh built-in (no sed & no awk) [[#4]](https://github.com/ad5030/homebridge-macosx-info/issues/3)
 
-
 ## Known bugs
 - [x] Uptime error in "homebridge-macosx-info" after more than one day ! [[#1]](https://github.com/ad5030/homebridge-macosx-info/issues/1)
 - [x] Temparature and fan mesures don't work on all Apple mac hardware. Used now [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary. You can see the hardware compatibility [here](https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md) [[#2]](https://github.com/ad5030/homebridge-macosx-info/issues/2)
@@ -142,8 +145,6 @@ This commands are only avalable for macOS
 * The original HomeKit API work was done by [KhaosT](https://twitter.com/khaost) in his [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) project
 * [simont77 - fakegato-history](https://github.com/simont77/fakegato-history)
 * [Jedda Wignall - OSX-Monitoring-Tools/check_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc)
-
-
 
 ## Disclaimer
 I'm furnishing this software "as is". I do not provide any warranty of the item whatsoever, whether express, implied, or statutory, including, but not limited to, any warranty of merchantability or fitness for a particular purpose or any warranty that the contents of the item will be error-free. The development of this module is not supported by Apple Inc. or eve. These vendors and me are not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.

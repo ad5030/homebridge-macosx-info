@@ -5,5 +5,6 @@
     "uptime":"up 2 days, 1:10",
     "freemem":316.21,
     "load":"3.15 1.97 1.82",
-    "disk":52
+    "disk":52,
+    "user":2
 } 

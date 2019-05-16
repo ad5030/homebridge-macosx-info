@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v0.2.11 2019-05-16 
+- Added nunber of Users connected in the host
+- fix bug in uptime return 
+  
 ## v0.2.10 2019-05-10 
 - Deleted `serial` entry in `config.json`
 - Minor change in `README.md` to specify installation steps

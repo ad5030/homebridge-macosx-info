@@ -24,13 +24,15 @@ read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
 _fan=${fields[8]}
 
-IFS=' ' read -ra STR <<< `uptime`   
-_uptime="${STR[1]} ${STR[2]} ${STR[3]} ${STR[4]//,/}"
+_uptime=`uptime | cut -d " " -f2- |  sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'`
 
 _load=`sysctl -n vm.loadavg` 
 _load="${_load//[\{\}]}"
 _load="${_load/ /}"
 _load="${_load%?}"
+
+_user=`who | wc -l`
+_user="${_user// /}"
 
 read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
 _freemem=${fields[1]}
@@ -38,7 +40,7 @@ _freemem=${fields[1]}
 read -a fields <<<  `df -h / | grep /`
 _disk=${fields[4]//%/}
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}'}' > $JSON_DATA_FILE
+echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}',"user":'${_user}'}' > $JSON_DATA_FILE
 }
 
 ## main ##

@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v0.2.12 2019-05-xx 
+- Add CPU Power consumption
+- Add units constant in index.js
+- Add Prerequisites in README.md
+
 ## v0.2.11 2019-05-16 
 - Added nunber of Users connected in the host
 - fix bug in uptime return 

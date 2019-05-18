@@ -18,7 +18,7 @@ Such as :
 * Free Mem (Mo)
 * Disk avalable (%)
 * Users (nb)
-
+* CPU Power consumption (Watt)
 
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 
@@ -26,18 +26,19 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ![homebridge-macos-info, Eve., screenshot](screenshots/.fake.png)
 ![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_2.png)
 
->(c) Screenshots are taken from the Elgato Eve.app
+>Screenshots are taken from the Elgato Eve.app (c)
 
 ## Exemple of .json data response file
 ```json  
 {
-    "updateTime":"Sun Apr 21 22:38:07 CEST 2019",
-    "temperature":30.7,
-    "fan":1801,
-    "uptime":"up 16:38, 2 users",
-    "load":"3.15 1.97 1.82",
-    "freemem":422.35,
-    "disk":50,
+    "updateTime":"Sat May 18 17:10:51 CEST 2019",
+    "temperature":29.1,
+    "fan":1803,
+    "power":6.72,
+    "uptime":"up 10:56",
+    "load":"1.63 1.66 1.66",
+    "freemem":734.87,
+    "disk":"50",
     "user":2
 }
 ```
@@ -103,6 +104,9 @@ read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
 _fan=${fields[8]}
 
+read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
+_power=${fields[0]//W/}
+
 _uptime=`uptime | cut -d " " -f2- |  sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'`
 
 _load=`sysctl -n vm.loadavg` 
@@ -118,12 +122,22 @@ _freemem=${fields[1]}
 
 read -a fields <<<  `df -h / | grep /`
 _disk=${fields[4]//%/}
+#_disk="$_disk- ${fields[3]//%/} Avail"
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}',"user":'${_user}'}' > $JSON_DATA_FILE
+echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"power":'${_power}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":"'${_disk}'","user":'${_user}'}' > $JSON_DATA_FILE
 }
 ```
+### STEP 3 : Add NOPASSWD entry in /etc/sudoers 
+```sh
+# root and users in group wheel can run anything on any machine as any user
+root        ALL = (ALL) ALL
+%admin      ALL = (ALL) ALL
+AD          ALL=NOPASSWD: ALL
+```
+>Note : 
+You must change the user `AD` by the user who run `homebridge` in your system
 
-### STEP 3 : restart homebridge 
+### STEP 4 : restart homebridge 
 Combine the two commands in a terminal to restart homebridge background process
 
  - `launchctl unload ~/Library/LaunchAgents/com.homebridge.server.plist`

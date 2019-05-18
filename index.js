@@ -16,6 +16,11 @@ const packageFile = require("./package.json");
 var os = require("os");
 var hostname = os.hostname();
 
+const UNIT_RPM='rpm'
+const UNIT_MO='Mo'
+const UNIT_PERCENT='%'
+const UNIT_WATT='Watt'
+
 module.exports = function(homebridge) {
     if(!isConfig(homebridge.user.configPath(), "accessories", "MacOSXSysInfo")) {
         return;
@@ -131,6 +136,15 @@ MacOSXSysInfo.prototype.getUser = function (callback) {
 	callback(null, user);
 };
 
+MacOSXSysInfo.prototype.getPower = function (callback) {
+	var json = fs.readFileSync(this.readFile, "utf-8");
+	var obj = JSON.parse(json);
+	var power = parseFloat(obj.power);
+	//jsonData = require(this.readFile);
+	//var user = jsonData.user;
+	callback(null, power);
+};
+
 MacOSXSysInfo.prototype.setUpServices = function () {
 
 	var that = this;
@@ -147,7 +161,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	
 	let uuid1 = UUIDGen.generate(that.name + '-Uptime');
 	info = function (displayName, subtype) {
-		Characteristic.call(this, 'Uptime :', uuid1);
+		Characteristic.call(this, 'Uptime', uuid1);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
 			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
@@ -159,9 +173,10 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 
 	let uuid2 = UUIDGen.generate(that.name + '-AvgLoad');
 	load = function () {
-		Characteristic.call(this, 'Avg Load (%) :', uuid2);
+		Characteristic.call(this, 'Avg Load', uuid2);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
+			unit: UNIT_PERCENT,
 			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 		});
 		this.value = this.getDefaultValue();
@@ -171,9 +186,10 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	
 	let uuid3 = UUIDGen.generate(that.name + '-Mem');
 	freemem = function () {
-		Characteristic.call(this, 'Free Mem (Mo) :', uuid3);
+		Characteristic.call(this, 'Free Mem', uuid3);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
+			unit: UNIT_MO,
 			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 		});
 		this.value = this.getDefaultValue();
@@ -183,9 +199,10 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 
 	let uuid4 = UUIDGen.generate(that.name + '-Fan');
 	fan = function () {
-		Characteristic.call(this, 'Fan (rpm) :', uuid4);
+		Characteristic.call(this, 'Fan speed', uuid4);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
+			unit: UNIT_RPM,
 			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 		});
 		this.value = this.getDefaultValue();
@@ -195,9 +212,10 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 
 	let uuid5 = UUIDGen.generate(that.name + '-Disk');
 	disk = function () {
-		Characteristic.call(this, 'Disk used (%) :', uuid5);
+		Characteristic.call(this, 'Disk used', uuid5);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
+			unit: UNIT_PERCENT,
 			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 		});
 		this.value = this.getDefaultValue();
@@ -207,7 +225,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 
 	let uuid6 = UUIDGen.generate(that.name + '-User');
 	user = function () {
-		Characteristic.call(this, 'Users (nb) :', uuid6);
+		Characteristic.call(this, 'Users (nb)', uuid6);
 		this.setProps({
 			format: Characteristic.Formats.STRING,
 			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
@@ -216,6 +234,19 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	};
 	inherits(user, Characteristic);
 	user.UUID = uuid6;
+
+	let uuid7 = UUIDGen.generate(that.name + '-Power');
+	power = function () {
+		Characteristic.call(this, 'Power', uuid7);
+		this.setProps({
+			format: Characteristic.Formats.STRING,
+			unit: UNIT_WATT,
+			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+		});
+		this.value = this.getDefaultValue();
+	};
+	inherits(power, Characteristic);
+	power.UUID = uuid7;
 
 	this.macOSXService = new Service.TemperatureSensor(that.name);
 	var currentTemperatureCharacteristic = this.macOSXService.getCharacteristic(Characteristic.CurrentTemperature);		
@@ -231,6 +262,8 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		.on('get', this.getDisk.bind(this));
 	this.macOSXService.getCharacteristic(user)
 		.on('get', this.getUser.bind(this));
+	this.macOSXService.getCharacteristic(power)
+		.on('get', this.getPower.bind(this));
 	function getCurrentTemperature() {
 		var data = fs.readFileSync(that.readFile, "utf-8");
 
@@ -249,7 +282,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		setInterval(() => {
 			currentTemperatureCharacteristic.updateValue(getCurrentTemperature());
 			
-			that.log("Temperature: " + temp);
+			that.log("Current Temp: " + temp);
 			this.fakeGatoHistoryService.addEntry({time: new Date().getTime() / 1000, temp: temp});
 			//this.fakeGatoHistoryService.addEntry({time: new Date().getTime(), temp: temp});	
 

@@ -24,6 +24,9 @@ read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
 _temp=${fields[7]//,/.}
 _fan=${fields[8]}
 
+read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
+_power=${fields[0]//W/}
+
 _uptime=`uptime | cut -d " " -f2- |  sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'`
 
 _load=`sysctl -n vm.loadavg` 
@@ -39,8 +42,9 @@ _freemem=${fields[1]}
 
 read -a fields <<<  `df -h / | grep /`
 _disk=${fields[4]//%/}
+#_disk="$_disk- ${fields[3]//%/} Avail"
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":'${_disk}',"user":'${_user}'}' > $JSON_DATA_FILE
+echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"power":'${_power}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":"'${_disk}'","user":'${_user}'}' > $JSON_DATA_FILE
 }
 
 ## main ##

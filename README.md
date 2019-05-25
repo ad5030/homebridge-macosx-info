@@ -26,7 +26,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 ![homebridge-macos-info, Eve., screenshot](screenshots/fake.png)
 ![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_2.png)
 
->Screenshots are taken from the Elgato Eve.app (c)
+>Screenshots are taken from the Elgato Eve.app
 
 ## Exemple of .json data response file
 ```json  
@@ -49,7 +49,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x#readme) on macOS <span style="color:gray">*(optional)</span>*
 * Install [check_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) on macOS
 * Install [Eve.app](https://www.evehome.com/en/eve-app) on iOS (for all availables plugin function), or it's possible to used "Home" app, but only on macOSX Majave and iOS (all plugin function aren't availables on this app !)
-* [Enable NOPASSWD](#STEP-3-:-Add-NOPASSWD-entry-in-/etc/sudoers) for user in sudoers file, 
+* [Enable NOPASSWD](#STEP-3-:-Add-NOPASSWD-entry-in-/etc/sudoers) for user in sudoers file
 
 ## Installation
 Used [npm](https://www.npmjs.com/package/homebridge-macosx-info) tool to install homebridge-macosx-info, and execute the command line below

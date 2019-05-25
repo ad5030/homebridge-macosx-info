@@ -23,7 +23,7 @@ Such as :
 You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
 
 ![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_1.png)
-![homebridge-macos-info, Eve., screenshot](screenshots/.fake.png)
+![homebridge-macos-info, Eve., screenshot](screenshots/fake.png)
 ![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_2.png)
 
 >Screenshots are taken from the Elgato Eve.app (c)
@@ -49,6 +49,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x#readme) on macOS <span style="color:gray">*(optional)</span>*
 * Install [check_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) on macOS
 * Install [Eve.app](https://www.evehome.com/en/eve-app) on iOS (for all availables plugin function), or it's possible to used "Home" app, but only on macOSX Majave and iOS (all plugin function aren't availables on this app !)
+* [Enable NOPASSWD](#STEP-3-:-Add-NOPASSWD-entry-in-/etc/sudoers) for user in sudoers file, 
 
 ## Installation
 Used [npm](https://www.npmjs.com/package/homebridge-macosx-info) tool to install homebridge-macosx-info, and execute the command line below
@@ -64,6 +65,9 @@ Add this lines in config.json
             "accessory": "MacOSXSysInfo",
             "name": "macOSX Info",
             "file": "/tmp/_homebridge-macosx-info.json",
+            "serial": "042-03-000",
+            "consumption": true,
+            "user": true,
             "updateInterval": 60000
         }
     ],
@@ -75,6 +79,9 @@ Add this lines in config.json
 | `name`          | a human-readable name for your plugin|No|`macOSX Info`|
 | `file`          | .json respons file|yes|default : `/tmp/_homebridge-macosx-info.json`|
 | `updateInterval`| is time in ms of data update|yes|default : `null`|
+| `consumption`| `true` for log CPU consumption|yes|default : `null`|
+| `user`| `true` for log user number|yes|default : `null`|
+
 
 >Note : 
 >1. The `index.js` call *`<PATH of Node Module>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
@@ -95,36 +102,49 @@ var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/hom
 JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json # path of .json respons file 
 CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc # path of check_osx_smc binary
 
-function sys_mon()
-{
-_time=`date`
+function sys_mon() {
+    _time=`date`
 
-# See the hardware compatibility -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md
-read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
-_temp=${fields[7]//,/.}
-_fan=${fields[8]}
+    _power=null
+    _temp=null
+    _fan=null
+    _uptime=null
+    _load=null
+    _user=null
+    _freemem=null
 
-read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
-_power=${fields[0]//W/}
+    # See the hardware compatibility -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md
+    read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+    _temp=${fields[7]//,/.}
+    _fan=${fields[8]}
 
-_uptime=`uptime | cut -d " " -f2- |  sed -E 's/.*(up.*), [[:digit:]]+ user.*/\1/'`
+    _power=`sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA"`;
+    _power=${_power#*SA): }
+    _power=${_power//W/}
 
-_load=`sysctl -n vm.loadavg` 
-_load="${_load//[\{\}]}"
-_load="${_load/ /}"
-_load="${_load%?}"
+    _uptime=`uptime`
+    _load=${_uptime}
 
-_user=`who | wc -l`
-_user="${_user// /}"
+    _uptime=${_uptime%users*}
+    _user=${_uptime}
 
-read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
-_freemem=${fields[1]}
+    _uptime=${_uptime%,*}
+    _uptime=${_uptime#*up}
+    _uptime="${_uptime# }"
 
-read -a fields <<<  `df -h / | grep /`
-_disk=${fields[4]//%/}
-#_disk="$_disk- ${fields[3]//%/} Avail"
+    _load=${_load#*load averages: }
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"power":'${_power}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":"'${_disk}'","user":'${_user}'}' > $JSON_DATA_FILE
+    _user=${_user#*,*}
+    _user=${_user#*,*}
+    _user=${_user// /}
+
+    read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"`
+    _freemem=${fields[1]}
+
+    read -a fields <<<  `df -h / | grep /`
+    _disk=${fields[4]//%/}
+
+    echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"power":'${_power}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":"'${_disk}'","user":'${_user}'}' > $JSON_DATA_FILE
 }
 ```
 ### STEP 3 : Add NOPASSWD entry in /etc/sudoers 
@@ -132,10 +152,10 @@ echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}
 # root and users in group wheel can run anything on any machine as any user
 root        ALL = (ALL) ALL
 %admin      ALL = (ALL) ALL
-AD          ALL=NOPASSWD: ALL
+<USER>      ALL=NOPASSWD: ALL
 ```
 >Note : 
-You must change the user `AD` by the user who run `homebridge` in your system
+You must change the user `<USER>` by the user who run `homebridge` in your system
 
 ### STEP 4 : restart homebridge 
 Combine the two commands in a terminal to restart homebridge background process

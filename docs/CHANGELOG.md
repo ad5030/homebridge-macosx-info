@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v0.3.1 2019-05-25 
+- Performance : Optimize `homebridge-macosx-info.sh` script
+- Now, CPU Power consumption and Users are optional. The confuguration is in `config.json` homebridge file
+
 ## v0.3.0 2019-05-18 
 - Add CPU Power consumption
 - Add units constant in index.js

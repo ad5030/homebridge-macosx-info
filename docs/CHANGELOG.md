@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.0.0 2019-05-31 
+- First released
+- This update includes a number of bug fixes and stability improvements
+
 ## v0.3.1 2019-05-25 
 - Performance : Optimize `homebridge-macosx-info.sh` script
 - Now, CPU Power consumption and Users are optional. The confuguration is in `config.json` homebridge file

@@ -20,11 +20,15 @@ Such as :
 * Users (nb)
 * CPU Power consumption (Watt)
 
-You can see below two screenshots for illustrate homebridge-macos-info homebridge/HomeKit plugin.
+You can see below screenshots for illustrate homebridge-macos-info plugin.
 
-![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_1.png)
-![homebridge-macos-info, Eve., screenshot](screenshots/fake.png)
-![homebridge-macos-info, Eve., screenshot](screenshots/screenshot_2.png)
+![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_1.png)
+![homebridge-macos-info, Eve., screenshot](/img/fake.png)
+![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_2.png)
+
+![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_3.png)
+![homebridge-macos-info, Eve., screenshot](/img/fake.png)
+![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_4.png)
 
 >Screenshots are taken from the Elgato Eve.app
 
@@ -49,7 +53,7 @@ You can see below two screenshots for illustrate homebridge-macos-info homebridg
 * Install [Homebridge Config UI X](https://github.com/oznu/homebridge-config-ui-x#readme) on macOS <span style="color:gray">*(optional)</span>*
 * Install [check_osx_smc](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) on macOS
 * Install [Eve.app](https://www.evehome.com/en/eve-app) on iOS (for all availables plugin function), or it's possible to used "Home" app, but only on macOSX Majave and iOS (all plugin function aren't availables on this app !)
-* [Enable NOPASSWD](#STEP-3-:-Add-NOPASSWD-entry-in-/etc/sudoers) for user in sudoers file
+* [Enable NOPASSWD](#STEP-3-:-Add-NOPASSWD-entry-in-/etc/sudoers) for user in `/etc/sudoers` file
 
 ## Installation
 Used [npm](https://www.npmjs.com/package/homebridge-macosx-info) tool to install homebridge-macosx-info, and execute the command line below
@@ -79,24 +83,27 @@ Add this lines in config.json
 | `name`          | a human-readable name for your plugin|No|`macOSX Info`|
 | `file`          | .json respons file|yes|default : `/tmp/_homebridge-macosx-info.json`|
 | `updateInterval`| is time in ms of data update|yes|default : `null`|
-| `consumption`| `true` for log CPU consumption|yes|default : `null`|
-| `user`| `true` for log user number|yes|default : `null`|
+| `consumption`| `true` for log CPU Consumption|yes|default : `null`|
+| `user`| `true` for log Users number|yes|default : `null`|
 
 
 >Note : 
 >1. The `index.js` call *`<PATH of Node Module>/homebridge-macosx-info/sh/homebridge-macosx-info.sh`* shell script. You can find this script in the repository in `/src/sh` directory
->2. It's possible that you can change the path of `homebridge-macosx-info.sh` shell script in `index.js`
+>2. It's possible that you can change the path of `homebridge-macosx-info.sh` in `readUptime` function on `index.js` script
 ```js
-var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh',
-		(error, stdout, stderr) => {
-			if (error !== null) {
-				//this.log("exec error: " + ${error});
-			}
-		});		 
+async function readUptime() {
+    const exec = require('child_process').exec;
+    var script = await exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh',
+        (error, stdout, stderr) => {
+            if (error !== null) {
+                //this.log("exec error: " + ${error});
+            }
+        }); 
+};
 ```
 ### STEP 2 : homebridge config.json file Adapte "homebridge-macosx-info.sh" file in "src/sh" directory
-1. Change or adapte path of temporary .json files -> `var JSON_DATA_FILE`
-2. Change or adapte path of [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary -> `var CHECK_OSX_SMC`
+1. Change or adapte path of temporary .json files -> var `JSON_DATA_FILE`
+2. Change or adapte path of [`check_osx_smc`](https://github.com/jedda/OSX-Monitoring-Tools/tree/master/check_osx_smc) binary -> var `CHECK_OSX_SMC`
 
 ```sh
 JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json # path of .json respons file 

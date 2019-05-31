@@ -1,0 +1,11 @@
+"accessories": [
+    {
+        "accessory": "MacOSXSysInfo",
+        "name": "macOSX Info",
+        "file": "/tmp/_homebridge-macosx-info.json",
+        "consumption": true,
+        "user": true,
+        "serial": "042-03-000",
+        "updateInterval": 60000
+    }
+]

@@ -35,14 +35,14 @@ module.exports = function(homebridge) {
     homebridge.registerAccessory('homebridge-macosx-info', 'MacOSXSysInfo', MacOSXSysInfo);
 }
 
-function readUptime() {
-	const exec = require('child_process').exec;
-	var script = exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh',
-		(error, stdout, stderr) => {
-			if (error !== null) {
-				//this.log("exec error: " + ${error});
-			}
-		});	
+async function readUptime() {
+    const exec = require('child_process').exec;
+var script = await exec('/usr/local/lib/node_modules/homebridge-macosx-info/src/sh/homebridge-macosx-info.sh', 
+(error, stdout, stderr) => {
+            if (error !== null) {
+                //this.log("exec error: " + ${error});
+            }
+        }); 
 };
 
 function isConfig(configFile, type, name) {
@@ -78,7 +78,7 @@ function MacOSXSysInfo(log, config) {
     } else {
 		this.readFile = "/tmp/_homebridge-macosx-info.json";
 	}
-	
+
 	if(config["consumption"]) {
 		this.consumption = config["consumption"];
     } else {
@@ -89,7 +89,7 @@ function MacOSXSysInfo(log, config) {
     } else {
 		this.user = null;
 	}
-  if(config["updateInterval"] && config["updateInterval"] > 0) {
+	  if(config["updateInterval"] && config["updateInterval"] > 0) {
         this.updateInterval = config["updateInterval"];
     } else {
         this.updateInterval = null;
@@ -237,7 +237,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	};
 	inherits(user, Characteristic);
 	user.UUID = uuid6;
-	//ADM
+
 
 	let uuid7 = UUIDGen.generate(that.name + '-Consumption');
 	power = function () {
@@ -250,7 +250,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 		this.value = this.getDefaultValue();
 	};
 	inherits(power, Characteristic);
-	power.UUID = uuid7; 
+	power.UUID = uuid7;
 
 	this.macOSXService = new Service.TemperatureSensor(that.name);
 	var currentTemperatureCharacteristic = this.macOSXService.getCharacteristic(Characteristic.CurrentTemperature);		
@@ -271,7 +271,7 @@ MacOSXSysInfo.prototype.setUpServices = function () {
 	if(this.consumption) {
 	this.macOSXService.getCharacteristic(power)
 		.on('get', this.getPower.bind(this));
-	}	
+	}
 	function getCurrentTemperature() {
 		var data = fs.readFileSync(that.readFile, "utf-8");
 

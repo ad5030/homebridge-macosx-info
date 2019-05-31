@@ -17,27 +17,31 @@ CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc # path of check_osx_smc binary
 
 function sys_mon()
 {
+    # See the hardware compatibility -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md
+    # See README -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/README.md
+    read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
+    _temp=${fields[7]//,/.}
+    _fan=${fields[8]}
+
     _time=`date`
+    read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
+    _power=${fields[0]//W/}
+
+
     _uptime=`uptime`
     _load=$_uptime
-    _user=$_uptime
 
-read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
-_power=${fields[0]//W/}
+    _uptime=${_uptime%users*} ; _uptime=${_uptime%,*} ; _uptime=${_uptime#*up} ; _uptime=${_uptime%,*} ; _uptime=${_uptime#*up} ; _uptime="up ${_uptime# }"
+    _load=${_load#*load averages: }
 
-# See the hardware compatibility -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/known-registers.md
-# See README -> https://github.com/jedda/OSX-Monitoring-Tools/blob/master/check_osx_smc/README.md
-read -a fields <<< `$CHECK_OSX_SMC -s c -r TA0P,F0Ac -w 70,5200 -c 85,5800`
-_temp=${fields[7]//,/.}
-_fan=${fields[8]}
 
-_uptime=${_uptime%users*} ; _uptime=${_uptime%,*} ; _uptime=${_uptime#*up} ; _uptime=${_uptime%,*} ; _uptime=${_uptime#*up} ; _uptime="up ${_uptime# }"
-_load=${_load#*load averages: }
-_user=${_user%users*} ; _user=${_user#*,*} ; _user=${_user#*,*} ; _user=${_user// /}
-read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"` ; _freemem=${fields[1]}
-read -a fields <<<  `df -h / | grep /` ; _disk=${fields[4]//%/}
+    _user=`who | wc -l`
+    _user="${_user// /}"
 
-echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"power":'${_power}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":"'${_disk}'","user":'${_user}'}' > $JSON_DATA_FILE
+    read -a fields <<< `vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576)' | grep "free:"` ; _freemem=${fields[1]}
+    read -a fields <<<  `df -h / | grep /` ; _disk=${fields[4]//%/}
+
+    echo '{"updateTime":"'${_time}'","temperature":'${_temp:5:4}',"fan":'${_fan:5:4}',"power":'${_power}',"uptime":"'${_uptime}'","load":"'${_load}'","freemem":'${_freemem:0:6}',"disk":"'${_disk}'","user":'${_user}'}' > $JSON_DATA_FILE
 }
-## main ##
+
 sys_mon

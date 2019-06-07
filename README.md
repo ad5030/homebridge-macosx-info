@@ -2,6 +2,8 @@
 [![npm](https://img.shields.io/npm/dt/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info) 
 [![npm](https://img.shields.io/npm/v/homebridge-macosx-info.svg)](https://www.npmjs.com/package/homebridge-macosx-info)
 [![GitHub license](https://img.shields.io/github/license/ad5030/homebridge-macosx-info.svg)](https://github.com/ad5030/homebridge-macosx-info)
+[![Donate](https://img.shields.io/badge/donate-paypal-yellowgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9MC83TRGACQPJ&source=url)
+
 
 *See [changelog](docs/CHANGELOG.md)*
 
@@ -22,13 +24,7 @@ Such as :
 
 You can see below screenshots for illustrate homebridge-macos-info plugin.
 
-![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_1.png)
-![homebridge-macos-info, Eve., screenshot](/img/fake.png)
-![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_2.png)
-
-![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_3.png)
-![homebridge-macos-info, Eve., screenshot](/img/fake.png)
-![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_4.png)
+![homebridge-macos-info, Eve., screenshot](/img/homebridge-macosx-info_screenshots.png)
 
 >Screenshots are taken from the Elgato Eve.app
 

@@ -12,8 +12,9 @@
 #~ Usage : homebridge-macosx-info.sh
 #-------------------------------------------------------------------
 
+DIR=$(dirname $0)
 JSON_DATA_FILE=/tmp/_homebridge-macosx-info.json # path of .json respons file 
-CHECK_OSX_SMC=~/r2d2/it/script/check_osx_smc # path of check_osx_smc binary
+CHECK_OSX_SMC=$DIR/../../bin/check_osx_smc # path of check_osx_smc binary
 
 function sys_mon()
 {

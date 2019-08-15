@@ -2,12 +2,13 @@
 #-------------------------------------------------------------------
 #~ @(#) Name : homebridge-macosx-info.sh
 #~ @(#) Desc : Persist in file the macOSX sys infrmation needed by "homebridge-macosx-info" Homebridge/HomeKit plugin
-#~ @(#) version : 1.0
+#~ @(#) version : 1.1
 # Auteur : adm@di-marco.net
-# Date : 2019-05-06
+# Date : 2019-08-14
 #-------------------------------------------------------------------
 # Version history
 #   v1.O - Initial version - Test and work on : mac mini (late 2014) & macOSX 10.13.6(High Sierra) 
+#   v1.1 - Minor change
 #-------------------------------------------------------------------
 #~ Usage : homebridge-macosx-info.sh
 #-------------------------------------------------------------------
@@ -28,13 +29,11 @@ function sys_mon()
     read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
     _power=${fields[0]//W/}
 
-
     _uptime=`uptime`
     _load=$_uptime
 
     _uptime=${_uptime%users*} ; _uptime=${_uptime%,*} ; _uptime=${_uptime#*up} ; _uptime=${_uptime%,*} ; _uptime=${_uptime#*up} ; _uptime="up ${_uptime# }"
     _load=${_load#*load averages: }
-
 
     _user=`who | wc -l`
     _user="${_user// /}"

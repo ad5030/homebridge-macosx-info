@@ -53,7 +53,9 @@ You can see below screenshots for illustrate homebridge-macos-info plugin.
 ## Installation
 Used [npm](https://www.npmjs.com/package/homebridge-macosx-info) tool to install homebridge-macosx-info, and execute the command line below
 
-```npm i homebridge-macosx-info```
+```console
+npm i homebridge-macosx-info
+```
 
 ## Configuration
 ### STEP 1 : homebridge config.json file
@@ -117,7 +119,6 @@ function sys_mon()
     read -a fields <<< `sudo powermetrics -i 500 -n1 --samplers cpu_power | grep "CPUs+GT+SA" | sed 's/Intel energy model derived package power (CPUs+GT+SA): //g'`
     _power=${fields[0]//W/}
 
-
     _uptime=`uptime`
     _load=$_uptime
 
@@ -140,7 +141,7 @@ root        ALL = (ALL) ALL
 %admin      ALL = (ALL) ALL
 <USER>      ALL=NOPASSWD: ALL
 ```
->Note : 
+>**Note :** 
 You must change the user `<USER>` by the user who run `homebridge` in your system
 
 ### STEP 4 : restart homebridge 
@@ -149,7 +150,7 @@ Combine the two commands in a terminal to restart homebridge background process
  - `launchctl unload ~/Library/LaunchAgents/com.homebridge.server.plist`
  - `launchctl load ~/Library/LaunchAgents/com.homebridge.server.plist`
 
->Note : 
+>**Note :** 
 This commands are only avalable for macOS 
 
 ## Todo

@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.0.1 2019-08-14
+- Minor change in README and code
+
 ## v1.0.1 2019-06-07
 - Add check_osx_smc binary in git package
 - Add relative path for cal check_osx_smc 

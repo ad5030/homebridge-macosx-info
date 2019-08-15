@@ -78,7 +78,6 @@ function MacOSXSysInfo(log, config) {
     } else {
 		this.readFile = "/tmp/_homebridge-macosx-info.json";
 	}
-
 	if(config["consumption"]) {
 		this.consumption = config["consumption"];
     } else {

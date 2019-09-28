@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v1.0.3 2019-09-29
+- Minor change in package.json
+
 ## v1.0.2 2019-08-14
 - Minor change in README and code
 

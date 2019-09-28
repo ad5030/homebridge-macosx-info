@@ -1,10 +1,10 @@
 {
   "name": "homebridge-macosx-info",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A homebridge plugin that get macOSX information",
-  "homepage": "https://github.com/ad5030/homebridge-macosx-info#readme",
+  "homepage": "https://di-marco.net/projects/homebridge-macosx-info/",
   "main": "index.js",
-  "author": "ad5030 <adm@di-marco.net>",
+  "author": "AdM <adm@di-marco.net>",
   "keywords": [
     "homebridge-plugin",
     "homebridge",
